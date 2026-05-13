@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Diagnostic Suite | Envisioned Flow™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --black: #0A0A0A;
+    --black-mid: #1A1A1A;
+    --dark: #2A2A2A;
+    --mid: #6A6A6A;
+    --border: #E0E0E0;
+    --white: #FFFFFF;
+    --off-white: #F9F7F4;
+    --gold: #C9A84C;
+    --gold-warm: #b8913a;
+    --gold-pale: rgba(201,168,76,0.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--black);
+    border-bottom: 1px solid #222;
+    padding: 0 40px;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 500;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-brand span { color: var(--gold); }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #888; text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--gold) !important;
+    color: var(--black) !important;
+    padding: 8px 20px !important;
+    border-radius: 2px;
+    font-weight: 500 !important;
+    letter-spacing: 0.08em !important;
+  }
+  .nav-cta:hover { background: var(--gold-warm) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 60%, rgba(201,168,76,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 800px; }
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 28px;
+    padding: 8px 20px;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 2px;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 80px);
+    font-weight: 500; line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 16px; line-height: 1.7;
+    color: #888; max-width: 560px;
+    margin: 0 auto 48px;
+    font-weight: 300;
+  }
+  .hero-stats {
+    display: flex; gap: 48px; justify-content: center;
+    padding-top: 48px;
+    border-top: 1px solid #222;
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 500;
+    color: var(--gold); display: block;
+  }
+  .stat-label {
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: #555; margin-top: 4px;
+  }
+
+  /* TOOLS SECTION */
+  .tools-section {
+    padding: 100px 40px;
+    background: var(--off-white);
+  }
+  .section-header {
+    text-align: center; margin-bottom: 64px;
+  }
+  .section-eyebrow {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px; display: block;
+  }
+  .section-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px); font-weight: 500;
+    color: var(--black); line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .section-header p {
+    font-size: 15px; color: var(--mid); margin-top: 16px;
+    max-width: 520px; margin-left: auto; margin-right: auto;
+    line-height: 1.7; font-weight: 300;
+  }
+  .tools-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2px; max-width: 1100px; margin: 0 auto;
+  }
+  .tool-card {
+    background: var(--white);
+    padding: 52px 48px;
+    position: relative;
+    transition: transform 0.2s;
+    border: 1px solid var(--border);
+  }
+  .tool-card:hover { transform: translateY(-2px); }
+  .tool-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-warm));
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .tool-card:hover::before { opacity: 1; }
+  .tool-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px; font-weight: 400;
+    color: rgba(201,168,76,0.1);
+    position: absolute; top: 24px; right: 32px;
+    line-height: 1;
+  }
+  .tool-category {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px; display: block;
+  }
+  .tool-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 500;
+    color: var(--black); margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .tool-tagline {
+    font-size: 14px; color: var(--mid);
+    line-height: 1.65; margin-bottom: 28px;
+    font-weight: 300;
+  }
+  .tool-domains {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px;
+  }
+  .domain-tag {
+    font-size: 11px; padding: 4px 12px;
+    border: 1px solid var(--border);
+    color: var(--mid); border-radius: 2px;
+    letter-spacing: 0.04em;
+  }
+  .tool-meta {
+    display: flex; gap: 24px; margin-bottom: 36px;
+    padding-top: 24px; border-top: 1px solid var(--border);
+  }
+  .meta-item { }
+  .meta-label {
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #aaa; display: block; margin-bottom: 4px;
+  }
+  .meta-value { font-size: 13px; color: var(--black); font-weight: 500; }
+  .tool-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--black); color: var(--white);
+    padding: 14px 28px; border-radius: 2px;
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; font-weight: 500;
+    transition: background 0.2s;
+  }
+  .tool-cta:hover { background: var(--gold); color: var(--black); }
+  .tool-cta svg { transition: transform 0.2s; }
+  .tool-cta:hover svg { transform: translateX(4px); }
+
+  /* FRAMEWORK */
+  .framework-section {
+    padding: 100px 40px;
+    background: var(--black);
+  }
+  .framework-section .section-header h2 { color: var(--white); }
+  .framework-section .section-header p { color: #555; }
+  .phases-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 1px; max-width: 1100px; margin: 0 auto;
+    background: #222;
+  }
+  .phase-card {
+    background: var(--black-mid);
+    padding: 36px 28px;
+    text-align: center;
+  }
+  .phase-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px; color: var(--gold);
+    letter-spacing: 0.15em; display: block; margin-bottom: 12px;
+  }
+  .phase-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 500;
+    color: var(--white); display: block; margin-bottom: 10px;
+  }
+  .phase-desc {
+    font-size: 12px; color: #555; line-height: 1.6; font-weight: 300;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    padding: 100px 40px;
+    background: var(--white);
+    text-align: center;
+  }
+  .cta-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 56px); font-weight: 500;
+    color: var(--black); margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+  .cta-section h2 em { font-style: italic; color: var(--gold); }
+  .cta-section p {
+    font-size: 15px; color: var(--mid); margin-bottom: 40px;
+    font-weight: 300; max-width: 480px; margin-left: auto; margin-right: auto;
+    line-height: 1.7;
+  }
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--gold); color: var(--black);
+    padding: 16px 40px; border-radius: 2px;
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; font-weight: 600;
+    transition: background 0.2s;
+  }
+  .cta-btn:hover { background: var(--gold-warm); }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid #1a1a1a;
+    padding: 40px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px; color: var(--white);
+  }
+  .footer-brand span { color: var(--gold); }
+  .footer-right { font-size: 12px; color: #444; letter-spacing: 0.04em; }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 24px 60px; }
+    .hero-stats { gap: 24px; flex-wrap: wrap; }
+    .tools-section { padding: 60px 20px; }
+    .tools-grid { grid-template-columns: 1fr; }
+    .tool-card { padding: 36px 28px; }
+    .phases-grid { grid-template-columns: 1fr 1fr; }
+    .framework-section { padding: 60px 20px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://envisionedflow.com" class="nav-brand">Envisioned Flow<span>™</span></a>
+  <div class="nav-links">
+    <a href="https://envisionedflow.com/#about">About</a>
+    <a href="https://envisionedflow.com/#services">Services</a>
+    <a href="https://envisionedflow.com/#contact" class="nav-cta">Book a Strategy Call</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Envisioned Flow™ Diagnostic Suite</span>
+    <h1>Know exactly where<br/><em>your gaps are.</em></h1>
+    <p class="hero-sub">Structured assessments that surface what's broken, what's at risk, and where AI can unlock the most value — before you invest another dollar.</p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">6</span>
+        <span class="stat-label">Domains per tool</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">15<span style="font-size:20px">min</span></span>
+        <span class="stat-label">Average completion</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">UAE</span>
+        <span class="stat-label">Regulatory aligned</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">Free</span>
+        <span class="stat-label">No cost to assess</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tools-section">
+  <div class="section-header fade-up">
+    <span class="section-eyebrow">Choose your assessment</span>
+    <h2>Two tools. One clear picture.</h2>
+    <p>Select the diagnostic that matches your immediate priority — or run both for a complete operational view.</p>
+  </div>
+  <div class="tools-grid fade-up">
+
+    <div class="tool-card">
+      <span class="tool-num">01</span>
+      <span class="tool-category">AI Governance</span>
+      <h3>AI Governance Readiness Assessment</h3>
+      <p class="tool-tagline">How prepared is your organization for responsible AI at scale? Evaluate your governance posture across six domains aligned to UAE AI Charter, UAE PDPL, and global frameworks.</p>
+      <div class="tool-domains">
+        <span class="domain-tag">Governance Structure</span>
+        <span class="domain-tag">Risk Management</span>
+        <span class="domain-tag">Data & Privacy</span>
+        <span class="domain-tag">Transparency</span>
+        <span class="domain-tag">Human Oversight</span>
+        <span class="domain-tag">Regulatory Alignment</span>
+      </div>
+      <div class="tool-meta">
+        <div class="meta-item">
+          <span class="meta-label">Duration</span>
+          <span class="meta-value">15–20 min</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Output</span>
+          <span class="meta-value">Maturity Report</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Audience</span>
+          <span class="meta-value">CxO / Risk & Compliance</span>
+        </div>
+      </div>
+      <a href="./governance/index.html" class="tool-cta">
+        Begin Assessment
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <div class="tool-card">
+      <span class="tool-num">02</span>
+      <span class="tool-category">Software Delivery</span>
+      <h3>Software Development Process Evaluator</h3>
+      <p class="tool-tagline">Where is your engineering delivery breaking down? Diagnose friction, technical debt, and delivery risk across six software process domains — with a risk-rated report and quick wins.</p>
+      <div class="tool-domains">
+        <span class="domain-tag">Planning & Requirements</span>
+        <span class="domain-tag">Development Practices</span>
+        <span class="domain-tag">Testing & Quality</span>
+        <span class="domain-tag">Deployment & DevOps</span>
+        <span class="domain-tag">Team & Collaboration</span>
+        <span class="domain-tag">Security & Compliance</span>
+      </div>
+      <div class="tool-meta">
+        <div class="meta-item">
+          <span class="meta-label">Duration</span>
+          <span class="meta-value">15–20 min</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Output</span>
+          <span class="meta-value">Delivery Risk Report</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Audience</span>
+          <span class="meta-value">CTO / Engineering Leads</span>
+        </div>
+      </div>
+      <a href="./software/index.html" class="tool-cta">
+        Begin Assessment
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<section class="framework-section">
+  <div class="section-header fade-up">
+    <span class="section-eyebrow">Our methodology</span>
+    <h2>The Envisioned Flow™ Framework</h2>
+    <p>Every assessment maps to our five-phase delivery methodology — so your results translate directly into an engagement roadmap.</p>
+  </div>
+  <div class="phases-grid fade-up">
+    <div class="phase-card">
+      <span class="phase-num">01</span>
+      <span class="phase-name">Envision</span>
+      <p class="phase-desc">Assess current state, align stakeholders, define transformation roadmap</p>
+    </div>
+    <div class="phase-card">
+      <span class="phase-num">02</span>
+      <span class="phase-name">Architect</span>
+      <p class="phase-desc">Design systems, structures and strategies to close the gap</p>
+    </div>
+    <div class="phase-card">
+      <span class="phase-num">03</span>
+      <span class="phase-name">Automate</span>
+      <p class="phase-desc">Implement AI-assisted workflows and process re-engineering</p>
+    </div>
+    <div class="phase-card">
+      <span class="phase-num">04</span>
+      <span class="phase-name">Amplify</span>
+      <p class="phase-desc">Optimize, measure and scale what's working for lasting impact</p>
+    </div>
+    <div class="phase-card">
+      <span class="phase-num">05</span>
+      <span class="phase-name">Govern</span>
+      <p class="phase-desc">Frameworks, policies and oversight for responsible, compliant AI</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>Your report is<br/><em>15 minutes away.</em></h2>
+  <p>No forms. No sales call required. Just honest intelligence about where your organization stands.</p>
+  <a href="https://envisionedflow.com/#contact" class="cta-btn">
+    Talk to Envisioned Flow →
+  </a>
+</section>
+
+<footer>
+  <div class="footer-brand">Envisioned Flow<span>™</span> &nbsp;·&nbsp; <span style="color:#444;font-family:'DM Sans',sans-serif;font-size:13px;">Dubai, UAE</span></div>
+  <div class="footer-right">© 2025 Biztech Consulting FZ-LLC. All rights reserved.</div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

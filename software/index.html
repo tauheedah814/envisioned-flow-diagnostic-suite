@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Software Development Process Evaluator | Envisioned Flow™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --black: #0A0A0A; --black-mid: #1A1A1A; --dark: #2A2A2A;
+    --mid: #6A6A6A; --border: #E0E0E0; --white: #FFFFFF;
+    --off-white: #F9F7F4; --gold: #C9A84C; --gold-warm: #b8913a;
+    --gold-pale: rgba(201,168,76,0.08); --red: #c0392b; --green: #27ae60;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--black); min-height: 100vh; }
+  nav { background: var(--black); border-bottom: 1px solid #222; padding: 0 40px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-brand { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; color: var(--white); text-decoration: none; }
+  .nav-brand span { color: var(--gold); }
+  .nav-back { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #666; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
+  .nav-back:hover { color: var(--gold); }
+  .page-header { background: var(--black); padding: 60px 40px 56px; text-align: center; }
+  .header-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 16px; }
+  .page-header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 52px); font-weight: 500; color: var(--white); margin-bottom: 16px; letter-spacing: -0.01em; }
+  .page-header p { font-size: 15px; color: #666; max-width: 540px; margin: 0 auto; line-height: 1.7; font-weight: 300; }
+  .progress-bar-wrap { background: var(--black); padding: 0 40px 32px; }
+  .progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #555; max-width: 760px; margin-left: auto; margin-right: auto; }
+  .progress-track { height: 2px; background: #222; max-width: 760px; margin: 0 auto; border-radius: 1px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-warm)); transition: width 0.4s ease; }
+  .assessment-wrap { max-width: 760px; margin: 0 auto; padding: 48px 40px 80px; }
+  #intro-screen { }
+  .intro-card { background: var(--white); border: 1px solid var(--border); padding: 48px; margin-bottom: 24px; }
+  .intro-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 500; margin-bottom: 16px; }
+  .intro-card p { font-size: 14px; color: var(--mid); line-height: 1.75; font-weight: 300; margin-bottom: 16px; }
+  .domain-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 24px 0; }
+  .domain-item { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--dark); }
+  .domain-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+  .name-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0; }
+  .field-group { display: flex; flex-direction: column; gap: 6px; }
+  .field-group label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); }
+  .field-group input { border: 1px solid var(--border); background: var(--off-white); padding: 12px 16px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--black); border-radius: 2px; outline: none; transition: border-color 0.2s; }
+  .field-group input:focus { border-color: var(--gold); }
+  .start-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--black); color: var(--white); padding: 16px 36px; border: none; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+  .start-btn:hover { background: var(--gold); color: var(--black); }
+  #question-screen { display: none; }
+  .domain-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; display: block; }
+  .question-card { background: var(--white); border: 1px solid var(--border); padding: 44px; margin-bottom: 24px; }
+  .question-text { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 500; line-height: 1.35; color: var(--black); margin-bottom: 36px; }
+  .options-list { display: flex; flex-direction: column; gap: 10px; }
+  .option-btn { display: flex; align-items: flex-start; gap: 16px; padding: 18px 20px; background: var(--off-white); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; transition: all 0.15s; text-align: left; font-family: 'DM Sans', sans-serif; }
+  .option-btn:hover { border-color: var(--gold); background: var(--gold-pale); }
+  .option-btn.selected { border-color: var(--gold); background: var(--gold-pale); }
+  .option-letter { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 0.1em; min-width: 18px; padding-top: 1px; }
+  .option-text { font-size: 14px; color: var(--dark); line-height: 1.55; font-weight: 300; }
+  .question-nav { display: flex; justify-content: space-between; align-items: center; }
+  .q-counter { font-size: 12px; color: var(--mid); letter-spacing: 0.06em; }
+  .nav-btns { display: flex; gap: 12px; }
+  .btn-prev { padding: 12px 24px; background: transparent; border: 1px solid var(--border); color: var(--mid); font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.15s; }
+  .btn-prev:hover { border-color: var(--dark); color: var(--black); }
+  .btn-next { padding: 12px 28px; background: var(--black); color: var(--white); border: none; font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: background 0.2s; }
+  .btn-next:hover:not(:disabled) { background: var(--gold); color: var(--black); }
+  .btn-next:disabled { opacity: 0.35; cursor: not-allowed; }
+  #loading-screen { display: none; text-align: center; padding: 80px 20px; }
+  .loading-icon { width: 64px; height: 64px; margin: 0 auto 32px; }
+  .loading-ring { fill: none; stroke: var(--gold); stroke-width: 2; stroke-dasharray: 150; stroke-dashoffset: 0; animation: spin 1.4s linear infinite; transform-origin: center; }
+  @keyframes spin { to { stroke-dashoffset: -150; } }
+  #loading-screen h2 { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 500; color: var(--black); margin-bottom: 12px; }
+  #loading-screen p { font-size: 14px; color: var(--mid); font-weight: 300; }
+  #report-screen { display: none; }
+  .report-header { background: var(--black); padding: 48px; margin-bottom: 2px; }
+  .report-org { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #555; margin-bottom: 8px; }
+  .report-title { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 500; color: var(--white); margin-bottom: 24px; }
+  .score-row { display: flex; align-items: center; gap: 32px; }
+  .score-big { font-family: 'Cormorant Garamond', serif; font-size: 80px; font-weight: 400; color: var(--gold); line-height: 1; }
+  .score-level { font-size: 20px; font-weight: 500; color: var(--white); margin-bottom: 6px; }
+  .score-sub { font-size: 13px; color: #555; font-weight: 300; }
+  .badge { display: inline-block; padding: 6px 16px; border-radius: 2px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+  .badge-low { background: rgba(39,174,96,0.15); color: #27ae60; }
+  .badge-medium { background: rgba(243,156,18,0.15); color: #e67e22; }
+  .badge-high { background: rgba(192,57,43,0.15); color: #c0392b; }
+  .badge-critical { background: rgba(192,57,43,0.25); color: #c0392b; }
+  .report-section { background: var(--white); border: 1px solid var(--border); padding: 40px; margin-bottom: 2px; }
+  .report-section h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: var(--black); margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .report-section p { font-size: 14px; color: var(--dark); line-height: 1.75; font-weight: 300; }
+  .domain-bars { display: flex; flex-direction: column; gap: 16px; }
+  .domain-bar-row { }
+  .domain-bar-label { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; }
+  .domain-bar-name { color: var(--dark); }
+  .domain-bar-score { color: var(--gold); font-weight: 500; }
+  .domain-bar-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .domain-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-warm)); border-radius: 2px; transition: width 0.8s ease; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .col-card { padding: 24px; border: 1px solid var(--border); border-radius: 2px; }
+  .col-card h4 { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .col-item { display: flex; gap: 10px; margin-bottom: 10px; font-size: 13px; color: var(--dark); line-height: 1.5; font-weight: 300; }
+  .col-bullet { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+  .rec-cards { display: flex; flex-direction: column; gap: 12px; }
+  .rec-card { border: 1px solid var(--border); padding: 24px; border-radius: 2px; }
+  .rec-card-top { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .rec-phase { font-size: 11px; padding: 3px 10px; background: var(--gold-pale); border: 1px solid rgba(201,168,76,0.3); color: var(--gold); border-radius: 2px; letter-spacing: 0.06em; }
+  .rec-timeframe { font-size: 11px; padding: 3px 10px; background: var(--off-white); border: 1px solid var(--border); color: var(--mid); border-radius: 2px; }
+  .rec-impact-high { font-size: 11px; padding: 3px 10px; background: rgba(192,57,43,0.08); color: var(--red); border-radius: 2px; }
+  .rec-impact-med { font-size: 11px; padding: 3px 10px; background: rgba(243,156,18,0.1); color: #e67e22; border-radius: 2px; }
+  .rec-title { font-weight: 500; font-size: 14px; color: var(--black); margin-bottom: 6px; }
+  .rec-desc { font-size: 13px; color: var(--mid); line-height: 1.6; font-weight: 300; }
+  .quick-wins { display: flex; flex-direction: column; gap: 10px; }
+  .win-item { display: flex; gap: 16px; padding: 16px 20px; background: rgba(39,174,96,0.05); border: 1px solid rgba(39,174,96,0.15); border-radius: 2px; align-items: flex-start; }
+  .win-num { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--green); line-height: 1; flex-shrink: 0; }
+  .win-text { font-size: 13px; color: var(--dark); line-height: 1.55; font-weight: 300; }
+  .report-cta { background: var(--black); padding: 48px; text-align: center; }
+  .report-cta h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 500; color: var(--white); margin-bottom: 12px; }
+  .report-cta p { font-size: 14px; color: #555; margin-bottom: 28px; font-weight: 300; line-height: 1.7; }
+  .cta-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: var(--black); padding: 16px 40px; border-radius: 2px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; font-weight: 600; transition: background 0.2s; }
+  .cta-btn:hover { background: var(--gold-warm); }
+  @media (max-width: 640px) {
+    nav { padding: 0 20px; }
+    .assessment-wrap { padding: 32px 20px 60px; }
+    .intro-card, .question-card, .report-section, .report-header { padding: 28px; }
+    .name-fields, .domain-list, .two-col { grid-template-columns: 1fr; }
+    .score-row { flex-direction: column; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 12l-4-4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Diagnostic Suite
+  </a>
+  <a href="https://envisionedflow.com" class="nav-brand">Envisioned Flow<span>™</span></a>
+</nav>
+
+<div class="page-header">
+  <span class="header-eyebrow">Assessment Tool · 02 of 02</span>
+  <h1>Software Development Process Evaluator</h1>
+  <p>Diagnose friction, technical debt, and delivery risk across six software process domains — with a risk-rated report and actionable quick wins.</p>
+</div>
+
+<div class="progress-bar-wrap">
+  <div class="progress-meta">
+    <span id="progress-label">Ready to begin</span>
+    <span id="progress-pct">0%</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+  </div>
+</div>
+
+<div class="assessment-wrap">
+  <div id="intro-screen">
+    <div class="intro-card">
+      <h2>About this assessment</h2>
+      <p>This diagnostic identifies where your software delivery process is creating risk, slowing teams, or accumulating debt. Answer based on how your organization actually operates — not how you aspire to operate.</p>
+      <p>You'll receive a scored delivery risk report with domain-level analysis, a risk rating (Low to Critical), prioritized recommendations mapped to the Envisioned Flow framework, and quick wins your team can action immediately.</p>
+      <div class="domain-list">
+        <div class="domain-item"><span class="domain-dot"></span>Planning & Requirements</div>
+        <div class="domain-item"><span class="domain-dot"></span>Development Practices</div>
+        <div class="domain-item"><span class="domain-dot"></span>Testing & Quality</div>
+        <div class="domain-item"><span class="domain-dot"></span>Deployment & DevOps</div>
+        <div class="domain-item"><span class="domain-dot"></span>Team & Collaboration</div>
+        <div class="domain-item"><span class="domain-dot"></span>Security & Compliance</div>
+      </div>
+      <div class="name-fields">
+        <div class="field-group">
+          <label>Organization name</label>
+          <input type="text" id="org-name" placeholder="Acme Corp" />
+        </div>
+        <div class="field-group">
+          <label>Your role</label>
+          <input type="text" id="user-role" placeholder="CTO / Engineering Director" />
+        </div>
+        <div class="field-group">
+          <label>Team size</label>
+          <input type="text" id="team-size" placeholder="e.g. 20 engineers" />
+        </div>
+        <div class="field-group">
+          <label>Primary tech stack</label>
+          <input type="text" id="stack" placeholder="e.g. React, Node, AWS" />
+        </div>
+      </div>
+      <button class="start-btn" onclick="startAssessment()">
+        Begin Assessment
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="question-screen">
+    <span class="domain-label" id="q-domain-label"></span>
+    <div class="question-card">
+      <p class="question-text" id="q-text"></p>
+      <div class="options-list" id="options-list"></div>
+    </div>
+    <div class="question-nav">
+      <span class="q-counter" id="q-counter"></span>
+      <div class="nav-btns">
+        <button class="btn-prev" id="btn-prev" onclick="prevQuestion()">← Back</button>
+        <button class="btn-next" id="btn-next" onclick="nextQuestion()" disabled>Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="loading-screen">
+    <svg class="loading-icon" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="28" class="loading-ring"/>
+    </svg>
+    <h2>Analyzing your responses…</h2>
+    <p>Generating your delivery risk report. This takes about 15 seconds.</p>
+  </div>
+
+  <div id="report-screen"></div>
+</div>
+
+<script>
+const QUESTIONS = [
+  // Planning & Requirements
+  { domain: "Planning & Requirements", text: "How well-defined are requirements before your team begins development work?", options: ["Development starts with minimal requirements — we figure it out as we go", "High-level requirements exist but significant ambiguity remains at sprint start", "Requirements are documented but frequently change mid-sprint", "Requirements are well-defined with clear acceptance criteria before work begins", "Rigorous definition of done, story mapping, and requirements traceability in place"] },
+  { domain: "Planning & Requirements", text: "How does your team handle scope creep and changing priorities?", options: ["No formal process — scope expands constantly with little control", "Changes are common and frequently disrupt active sprints", "A change process exists but isn't always followed", "Scope changes go through a formal assessment before acceptance", "Mature change management with impact analysis, stakeholder alignment, and backlog governance"] },
+  { domain: "Planning & Requirements", text: "How accurately does your team estimate and hit delivery commitments?", options: ["We rarely hit estimates — most deliverables are late", "We hit roughly 50% of commitments on time", "Estimates are often optimistic — we hit about 70% on time", "We consistently hit 85%+ of commitments", "High predictability through velocity tracking, risk buffers, and retrospective-driven calibration"] },
+
+  // Development Practices
+  { domain: "Development Practices", text: "How is code quality maintained across your development team?", options: ["No formal quality standards — quality varies widely by engineer", "Informal peer review happens occasionally", "Code review is standard but inconsistently applied", "Mandatory peer review with documented standards and linting enforced in CI", "Comprehensive quality gates including review, static analysis, security scanning, and coverage thresholds"] },
+  { domain: "Development Practices", text: "How does your team manage technical debt?", options: ["Technical debt is not tracked — it accumulates invisibly", "Debt is acknowledged but rarely prioritized for remediation", "A tech debt backlog exists but rarely gets sprint allocation", "Tech debt is tracked and a percentage of capacity is reserved for remediation", "Tech debt is quantified, risk-rated, and managed as a first-class backlog item with executive visibility"] },
+  { domain: "Development Practices", text: "How mature is your documentation and knowledge management?", options: ["Documentation is minimal and frequently out of date", "Key documentation exists but onboarding new engineers is slow and painful", "Documentation standards exist for some areas but coverage is inconsistent", "Most systems and processes are documented with clear ownership", "Living documentation culture — docs updated as code changes, with automated staleness detection"] },
+
+  // Testing & Quality
+  { domain: "Testing & Quality", text: "What is the state of automated testing in your software delivery pipeline?", options: ["No automated testing — testing is entirely manual", "Some unit tests exist but coverage is low and inconsistent", "Unit and integration tests exist but no CI enforcement", "Automated test suite runs in CI with meaningful coverage thresholds", "Comprehensive test pyramid — unit, integration, E2E — with quality gates blocking deployment"] },
+  { domain: "Testing & Quality", text: "How are bugs and production incidents managed?", options: ["No formal process — bugs are handled reactively as they're discovered", "Bugs are tracked but prioritization is informal and reactive", "A bug tracking process exists but SLAs are not consistently met", "Defined bug triage process with severity levels and SLA commitments", "Full incident management lifecycle with root cause analysis, post-mortems, and systemic prevention"] },
+
+  // Deployment & DevOps
+  { domain: "Deployment & DevOps", text: "How frequently and safely does your team deploy to production?", options: ["Deployments are rare (monthly or less) — they are high-risk events", "We deploy every few weeks with significant manual coordination required", "Regular deployments but still require manual steps and cause some downtime", "Frequent automated deployments with feature flags and rollback capability", "Continuous deployment with automated pipelines, zero-downtime deploys, and real-time monitoring"] },
+  { domain: "Deployment & DevOps", text: "How mature is your infrastructure and environment management?", options: ["Environments are manually configured — no infrastructure-as-code", "Some automation exists but environments drift and cause reliability issues", "IaC exists for some environments but not consistently applied", "Infrastructure managed as code across all environments with drift detection", "Full GitOps model — immutable infrastructure, automated provisioning, and environment parity enforced"] },
+
+  // Team & Collaboration
+  { domain: "Team & Collaboration", text: "How effectively does your engineering team collaborate with product and business stakeholders?", options: ["Engineering and business operate in silos — collaboration is minimal", "Handoffs exist but alignment is often lost between discovery and delivery", "Regular ceremonies but misalignment between tech and business still causes rework", "Strong collaboration with shared OKRs and regular cross-functional alignment", "Embedded partnership model — product, engineering, and business co-own outcomes and metrics"] },
+  { domain: "Team & Collaboration", text: "How does your team handle knowledge transfer and bus factor risk?", options: ["Critical knowledge lives in individual engineers' heads — bus factor is dangerously high", "Some documentation exists but key systems are owned by single individuals", "We're aware of the risk but haven't systematically addressed it", "Pair programming, documentation standards, and cross-training reduce bus factor", "Systematic knowledge distribution — no single point of failure across critical systems"] },
+
+  // Security & Compliance
+  { domain: "Security & Compliance", text: "How is security integrated into your software development lifecycle?", options: ["Security is considered only at the end, if at all", "Basic security reviews happen before major releases", "Security guidelines exist but are not consistently applied during development", "Security is integrated into the development process with SAST/DAST in CI", "DevSecOps culture — security requirements defined at story level, automated scanning, and regular pen testing"] },
+  { domain: "Security & Compliance", text: "How does your team manage dependencies, vulnerabilities, and third-party risk?", options: ["No systematic tracking of dependencies or vulnerabilities", "We address vulnerabilities reactively when they become public", "Periodic dependency audits but no automated monitoring", "Automated dependency scanning with defined SLAs for critical vulnerability remediation", "Continuous automated monitoring with SBOM, contractual vendor security requirements, and zero-tolerance critical CVE policy"] },
+];
+
+let currentQ = 0;
+let answers = [];
+let orgData = {};
+
+function startAssessment() {
+  orgData = {
+    org: document.getElementById('org-name').value || 'Your Organization',
+    role: document.getElementById('user-role').value || 'Engineering Leader',
+    teamSize: document.getElementById('team-size').value || 'Mid-size team',
+    stack: document.getElementById('stack').value || 'Modern web stack',
+  };
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('question-screen').style.display = 'block';
+  answers = new Array(QUESTIONS.length).fill(null);
+  showQuestion(0);
+}
+
+function showQuestion(idx) {
+  currentQ = idx;
+  const q = QUESTIONS[idx];
+  document.getElementById('q-domain-label').textContent = q.domain;
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('q-counter').textContent = `Question ${idx + 1} of ${QUESTIONS.length}`;
+  document.getElementById('btn-prev').style.display = idx === 0 ? 'none' : 'inline-flex';
+  document.getElementById('btn-next').textContent = idx === QUESTIONS.length - 1 ? 'Generate Report →' : 'Next →';
+  updateProgress(idx);
+  const list = document.getElementById('options-list');
+  list.innerHTML = '';
+  const letters = ['A','B','C','D','E'];
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn' + (answers[idx] === i ? ' selected' : '');
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span class="option-text">${opt}</span>`;
+    btn.onclick = () => selectOption(i);
+    list.appendChild(btn);
+  });
+  document.getElementById('btn-next').disabled = answers[idx] === null;
+}
+
+function selectOption(i) {
+  answers[currentQ] = i;
+  document.querySelectorAll('.option-btn').forEach((b, idx) => b.classList.toggle('selected', idx === i));
+  document.getElementById('btn-next').disabled = false;
+}
+
+function nextQuestion() {
+  if (answers[currentQ] === null) return;
+  if (currentQ === QUESTIONS.length - 1) generateReport();
+  else showQuestion(currentQ + 1);
+}
+
+function prevQuestion() { if (currentQ > 0) showQuestion(currentQ - 1); }
+
+function updateProgress(idx) {
+  const answered = answers.filter(a => a !== null).length;
+  const pct = Math.round((answered / QUESTIONS.length) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('progress-label').textContent = `Domain: ${QUESTIONS[idx].domain}`;
+}
+
+async function generateReport() {
+  document.getElementById('question-screen').style.display = 'none';
+  document.getElementById('loading-screen').style.display = 'block';
+  document.getElementById('progress-fill').style.width = '100%';
+  document.getElementById('progress-pct').textContent = '100%';
+  document.getElementById('progress-label').textContent = 'Generating report…';
+
+  const domains = {};
+  QUESTIONS.forEach((q, i) => {
+    if (!domains[q.domain]) domains[q.domain] = [];
+    domains[q.domain].push({ question: q.text, answer: q.options[answers[i]], score: answers[i] });
+  });
+  const domainScores = {};
+  Object.entries(domains).forEach(([d, qs]) => {
+    const avg = qs.reduce((sum, q) => sum + q.score, 0) / qs.length;
+    domainScores[d] = Math.round((avg / 4) * 100);
+  });
+  const overallScore = Math.round(Object.values(domainScores).reduce((a, b) => a + b, 0) / Object.values(domainScores).length);
+
+  const prompt = `You are a senior software engineering consultant producing a delivery risk report for an engineering organization.
+
+Organization: ${orgData.org}
+Role of respondent: ${orgData.role}
+Team size: ${orgData.teamSize}
+Tech stack: ${orgData.stack}
+
+Assessment Responses by Domain:
+${Object.entries(domains).map(([d, qs]) => `
+${d} (Score: ${domainScores[d]}/100):
+${qs.map(q => `  Q: ${q.question}\n  A: ${q.answer}`).join('\n')}`).join('\n')}
+
+Overall Score: ${overallScore}/100
+
+Produce a JSON report with EXACTLY this structure:
+{
+  "maturity_level": "one of: Reactive / Developing / Repeatable / Managed / Optimizing",
+  "executive_summary": "3-4 sentence narrative summarizing the delivery posture and primary risk areas",
+  "delivery_risk": "one of: Low / Medium / High / Critical",
+  "delivery_risk_rationale": "one sentence explaining the risk rating in terms of business impact",
+  "tech_debt_note": "2 sentences specifically calling out the state of technical debt and its trajectory",
+  "strengths": ["strength 1", "strength 2", "strength 3"],
+  "critical_gaps": ["gap 1", "gap 2", "gap 3"],
+  "quick_wins": ["specific actionable win completable in under 2 weeks", "second quick win", "third quick win"],
+  "recommendations": [
+    {"title": "rec title", "description": "2-3 sentence description", "phase": "one of: Envision/Architect/Automate/Amplify/Govern", "timeframe": "e.g. 30 days / Q3 2025", "impact": "High or Medium"},
+    {"title": "rec title", "description": "...", "phase": "...", "timeframe": "...", "impact": "..."},
+    {"title": "rec title", "description": "...", "phase": "...", "timeframe": "...", "impact": "..."},
+    {"title": "rec title", "description": "...", "phase": "...", "timeframe": "...", "impact": "..."}
+  ],
+  "next_step": "One specific recommended next step for engaging Envisioned Flow to address the highest-priority finding"
+}
+
+Return ONLY valid JSON. No markdown, no preamble.`;
+
+  try {
+    const res = await fetch('/.netlify/functions/analyze-governance', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
+    const data = await res.json();
+    const text = data.content?.[0]?.text || '';
+    const clean = text.replace(/```json|```/g, '').trim();
+    const report = JSON.parse(clean);
+    renderReport(report, domainScores, overallScore);
+  } catch(err) {
+    document.getElementById('loading-screen').innerHTML = `
+      <h2 style="color:var(--red)">Something went wrong</h2>
+      <p style="color:var(--mid);margin-top:12px;">Please check your Netlify function is deployed and your API key is set. Error: ${err.message}</p>
+      <button onclick="location.reload()" style="margin-top:24px;padding:12px 28px;background:var(--black);color:var(--white);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.08em;border-radius:2px;">Try Again</button>
+    `;
+  }
+}
+
+function renderReport(r, domainScores, overallScore) {
+  document.getElementById('loading-screen').style.display = 'none';
+  const rs = document.getElementById('report-screen');
+  rs.style.display = 'block';
+  const riskBadge = { Low: 'badge-low', Medium: 'badge-medium', High: 'badge-high', Critical: 'badge-critical' };
+  rs.innerHTML = `
+    <div class="report-header">
+      <div class="report-org">${orgData.org} · ${orgData.teamSize} · ${new Date().toLocaleDateString('en-GB',{month:'long',year:'numeric'})}</div>
+      <div class="report-title">Software Delivery Process Report</div>
+      <div class="score-row">
+        <div class="score-big">${overallScore}</div>
+        <div class="score-info">
+          <div class="score-level">${r.maturity_level}</div>
+          <div class="score-sub">Overall Delivery Maturity Score (out of 100)</div>
+          <div style="margin-top:12px;"><span class="badge ${riskBadge[r.delivery_risk] || 'badge-medium'}">${r.delivery_risk} Delivery Risk</span></div>
+          <div style="font-size:12px;color:#555;margin-top:8px;font-weight:300;">${r.delivery_risk_rationale}</div>
+        </div>
+      </div>
+    </div>
+    <div class="report-section">
+      <h3>Executive Summary</h3>
+      <p>${r.executive_summary}</p>
+    </div>
+    <div class="report-section">
+      <h3>Domain Scores</h3>
+      <div class="domain-bars">
+        ${Object.entries(domainScores).map(([d, s]) => `
+          <div class="domain-bar-row">
+            <div class="domain-bar-label"><span class="domain-bar-name">${d}</span><span class="domain-bar-score">${s}/100</span></div>
+            <div class="domain-bar-track"><div class="domain-bar-fill" style="width:${s}%"></div></div>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="report-section">
+      <h3>Strengths & Critical Gaps</h3>
+      <div class="two-col">
+        <div class="col-card">
+          <h4>Strengths</h4>
+          ${r.strengths.map(s => `<div class="col-item"><span class="col-bullet">✓</span>${s}</div>`).join('')}
+        </div>
+        <div class="col-card">
+          <h4>Critical Gaps</h4>
+          ${r.critical_gaps.map(g => `<div class="col-item"><span class="col-bullet" style="color:var(--red)">!</span>${g}</div>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="report-section">
+      <h3>Technical Debt Note</h3>
+      <p>${r.tech_debt_note}</p>
+    </div>
+    <div class="report-section">
+      <h3>Quick Wins <span style="font-size:13px;font-weight:300;color:var(--mid);font-family:'DM Sans',sans-serif"> — completable within 2 weeks</span></h3>
+      <div class="quick-wins">
+        ${r.quick_wins.map((w, i) => `<div class="win-item"><span class="win-num">0${i+1}</span><span class="win-text">${w}</span></div>`).join('')}
+      </div>
+    </div>
+    <div class="report-section">
+      <h3>Priority Recommendations</h3>
+      <div class="rec-cards">
+        ${r.recommendations.map(rec => `
+          <div class="rec-card">
+            <div class="rec-card-top">
+              <span class="rec-phase">${rec.phase}</span>
+              <span class="rec-timeframe">${rec.timeframe}</span>
+              <span class="${rec.impact === 'High' ? 'rec-impact-high' : 'rec-impact-med'}">${rec.impact} Impact</span>
+            </div>
+            <div class="rec-title">${rec.title}</div>
+            <div class="rec-desc">${rec.description}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="report-cta">
+      <h3>Your report identifies the gaps.<br/>We close them.</h3>
+      <p>${r.next_step}</p>
+      <a href="https://envisionedflow.com/#contact" class="cta-btn">Book a Strategy Call →</a>
+    </div>
+  `;
+  rs.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
