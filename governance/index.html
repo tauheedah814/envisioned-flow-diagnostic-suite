@@ -83,13 +83,13 @@
 
   /* REPORT */
   #report-screen { display: none; }
-  .report-header { background: var(--black); padding: 52px; margin-bottom: 2px; }
-  .report-org { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
-  .report-title { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 500; color: var(--white); margin-bottom: 28px; }
+  .report-header { background: var(--white); padding: 52px; margin-bottom: 2px; border-top: 4px solid var(--gold); border-bottom: 1px solid var(--border); }
+  .report-org { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); margin-bottom: 8px; }
+  .report-title { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 500; color: var(--black); margin-bottom: 28px; }
   .score-row { display: flex; align-items: center; gap: 36px; }
   .score-big { font-family: 'Cormorant Garamond', serif; font-size: 88px; font-weight: 400; color: var(--gold); line-height: 1; }
-  .score-level { font-size: 24px; font-weight: 500; color: var(--white); margin-bottom: 8px; }
-  .score-sub { font-size: 15px; color: rgba(255,255,255,0.6); font-weight: 300; }
+  .score-level { font-size: 24px; font-weight: 500; color: var(--black); margin-bottom: 8px; }
+  .score-sub { font-size: 15px; color: var(--mid); font-weight: 300; }
   .badge { display: inline-block; padding: 7px 18px; border-radius: 2px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
   .badge-low { background: rgba(39,174,96,0.15); color: #27ae60; }
   .badge-medium { background: rgba(243,156,18,0.15); color: #e67e22; }
@@ -127,7 +127,7 @@
   .uae-note p { font-size: 15px; color: var(--dark); line-height: 1.75; font-weight: 300; }
   .report-cta { background: var(--black); padding: 52px; text-align: center; }
   .report-cta h3 { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 500; color: var(--white); margin-bottom: 14px; }
-  .report-cta p { font-size: 16px; color: rgba(255,255,255,0.6); margin-bottom: 32px; font-weight: 300; line-height: 1.75; }
+  .report-cta p { font-size: 16px; color: rgba(255,255,255,0.7); margin-bottom: 32px; font-weight: 300; line-height: 1.75; }
   .cta-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: var(--black); padding: 17px 42px; border-radius: 2px; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; font-weight: 600; transition: background 0.2s; }
   .cta-btn:hover { background: var(--gold-warm); }
 
@@ -356,7 +356,7 @@ function renderReport(r, domainScores, overallScore) {
           <div class="score-level">${r.maturity_level}</div>
           <div class="score-sub">Overall Governance Maturity Score (out of 100)</div>
           <div style="margin-top:14px;"><span class="badge ${riskBadge[r.delivery_risk]||'badge-medium'}">${r.delivery_risk} Risk</span></div>
-          <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-top:10px;font-weight:300;">${r.delivery_risk_rationale}</div>
+          <div style="font-size:14px;color:var(--mid);margin-top:10px;font-weight:300;">${r.delivery_risk_rationale}</div>
         </div>
       </div>
     </div>
