@@ -3,372 +3,855 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AI Governance Readiness Assessment | Envisioned Flow™</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<title>AI Governance Readiness Assessment — Envisioned Flow™</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --black: #0A0A0A; --black-mid: #1A1A1A; --dark: #2A2A2A;
-    --mid: #6A6A6A; --border: #E0E0E0; --white: #FFFFFF;
-    --off-white: #F9F7F4; --gold: #C9A84C; --gold-warm: #b8913a;
-    --gold-pale: rgba(201,168,76,0.08); --red: #c0392b; --green: #27ae60;
+    --black: #0A0A0A;
+    --gold: #C4A35A;
+    --gold-warm: #b8913a;
+    --white: #FFFFFF;
+    --off-white: #F9F7F4;
+    --text: #0A0A0A;
+    --muted: #777777;
+    --border: #E0E0E0;
+    --mid: #444444;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--black); min-height: 100vh; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-  /* NAV - WHITE */
-  nav { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 48px; height: 68px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 12px rgba(0,0,0,0.06); }
-  .nav-brand { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; color: var(--black); text-decoration: none; }
-  .nav-brand span { color: var(--gold); }
-  .nav-back { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
+  /* NAV */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .nav-logo {
+    font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500;
+    color: var(--white); text-decoration: none; letter-spacing: 0.04em;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-back {
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35); text-decoration: none;
+    transition: color 0.2s;
+  }
   .nav-back:hover { color: var(--gold); }
 
-  /* PAGE HEADER - WHITE */
-  .page-header { background: var(--white); padding: 80px 48px 64px; text-align: center; border-bottom: 1px solid var(--border); position: relative; }
-  .header-accent { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--gold), var(--gold-warm)); }
-  .header-eyebrow { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 16px; }
-  .page-header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 4vw, 56px); font-weight: 500; color: var(--black); margin-bottom: 16px; letter-spacing: -0.01em; }
-  .page-header p { font-size: 17px; color: var(--mid); max-width: 560px; margin: 0 auto; line-height: 1.75; font-weight: 300; }
-
-  .progress-bar-wrap { background: var(--white); padding: 24px 48px 28px; border-bottom: 1px solid var(--border); }
-  .progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 13px; letter-spacing: 0.06em; color: var(--mid); max-width: 760px; margin-left: auto; margin-right: auto; }
-  .progress-track { height: 3px; background: var(--border); max-width: 760px; margin: 0 auto; border-radius: 2px; overflow: hidden; }
-  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-warm)); transition: width 0.4s ease; }
-
-  .assessment-wrap { max-width: 760px; margin: 0 auto; padding: 52px 40px 80px; }
+  /* WRAPPER */
+  .app {
+    flex: 1; display: flex; flex-direction: column;
+    max-width: 760px; margin: 0 auto; width: 100%;
+    padding: 3rem 2rem 4rem;
+  }
 
   /* INTRO */
-  .intro-card { background: var(--white); border: 1px solid var(--border); padding: 52px; margin-bottom: 24px; border-radius: 2px; }
-  .intro-card h2 { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 500; margin-bottom: 16px; }
-  .intro-card p { font-size: 16px; color: var(--mid); line-height: 1.8; font-weight: 300; margin-bottom: 16px; }
-  .domain-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 28px 0; }
-  .domain-item { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--dark); }
-  .domain-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
-  .name-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
-  .field-group { display: flex; flex-direction: column; gap: 7px; }
-  .field-group label { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); }
-  .field-group input { border: 1px solid var(--border); background: var(--off-white); padding: 13px 16px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--black); border-radius: 2px; outline: none; transition: border-color 0.2s; }
-  .field-group input:focus { border-color: var(--gold); }
-  .start-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--black); color: var(--white); padding: 17px 38px; border: none; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; cursor: pointer; transition: background 0.2s; }
-  .start-btn:hover { background: var(--gold); color: var(--black); }
+  .intro { text-align: center; animation: fadeUp 0.5s ease both; }
+  .intro-eyebrow {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 1.25rem;
+  }
+  .intro h1 {
+    font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900; line-height: 1.1; margin-bottom: 1.25rem;
+    color: var(--white);
+  }
+  .intro h1 em { font-style: normal; color: var(--gold); }
+  .intro p {
+    font-size: 1.05rem; color: rgba(255,255,255,0.65); line-height: 1.8;
+    max-width: 560px; margin: 0 auto 2.5rem; font-weight: 300;
+  }
+  .intro-meta {
+    display: flex; gap: 2rem; justify-content: center; margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .meta-item { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+  .meta-num {
+    font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900;
+    color: var(--gold);
+  }
+  .meta-label {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(255,255,255,0.4);
+  }
+  .intro-domains {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;
+    margin-bottom: 2.5rem;
+  }
+  .domain-pill {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em;
+    padding: 0.35rem 0.85rem; border-radius: 20px;
+    border: 1px solid rgba(196,163,90,0.3);
+    color: rgba(255,255,255,0.5);
+  }
+  .btn-start {
+    display: inline-block; background: var(--gold); color: var(--black);
+    font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 1rem 2.5rem; border-radius: 4px;
+    border: none; cursor: pointer; transition: background 0.2s, transform 0.1s;
+  }
+  .btn-start:hover { background: var(--gold-warm); transform: translateY(-1px); }
+
+  /* PROGRESS */
+  .progress-wrap { margin-bottom: 2.5rem; }
+  .progress-label {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 0.6rem;
+  }
+  .progress-section {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .progress-count { font-size: 0.78rem; color: rgba(255,255,255,0.4); }
+  .progress-bar {
+    height: 2px; background: rgba(255,255,255,0.1); border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--gold); border-radius: 2px;
+    transition: width 0.4s ease;
+  }
 
   /* QUESTION */
-  #question-screen { display: none; }
-  .domain-label { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; display: block; }
-  .question-card { background: var(--white); border: 1px solid var(--border); padding: 48px; margin-bottom: 24px; border-radius: 2px; }
-  .question-text { font-family: 'Cormorant Garamond', serif; font-size: 27px; font-weight: 500; line-height: 1.35; color: var(--black); margin-bottom: 36px; }
-  .options-list { display: flex; flex-direction: column; gap: 12px; }
-  .option-btn { display: flex; align-items: flex-start; gap: 16px; padding: 20px 22px; background: var(--off-white); border: 1px solid var(--border); border-radius: 2px; cursor: pointer; transition: all 0.15s; text-align: left; font-family: 'DM Sans', sans-serif; }
-  .option-btn:hover { border-color: var(--gold); background: var(--gold-pale); }
-  .option-btn.selected { border-color: var(--gold); background: var(--gold-pale); }
-  .option-letter { font-size: 12px; font-weight: 600; color: var(--gold); letter-spacing: 0.1em; min-width: 18px; padding-top: 2px; }
-  .option-text { font-size: 15px; color: var(--dark); line-height: 1.6; font-weight: 300; }
-  .question-nav { display: flex; justify-content: space-between; align-items: center; }
-  .q-counter { font-size: 13px; color: var(--mid); letter-spacing: 0.06em; }
-  .nav-btns { display: flex; gap: 12px; }
-  .btn-prev { padding: 13px 26px; background: transparent; border: 1px solid var(--border); color: var(--mid); font-family: 'DM Sans', sans-serif; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.15s; }
-  .btn-prev:hover { border-color: var(--dark); color: var(--black); }
-  .btn-next { padding: 13px 30px; background: var(--black); color: var(--white); border: none; font-family: 'DM Sans', sans-serif; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: background 0.2s; }
-  .btn-next:hover:not(:disabled) { background: var(--gold); color: var(--black); }
-  .btn-next:disabled { opacity: 0.35; cursor: not-allowed; }
+  .question-screen { animation: fadeUp 0.35s ease both; }
+  .question-num {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 1rem;
+  }
+  .question-text {
+    font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-weight: 700; line-height: 1.35; color: var(--white); margin-bottom: 2rem;
+  }
+  .options { display: flex; flex-direction: column; gap: 0.85rem; }
+  .option {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1rem 1.25rem; border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; cursor: pointer; transition: all 0.2s;
+    background: rgba(255,255,255,0.02);
+  }
+  .option:hover { border-color: rgba(196,163,90,0.4); background: rgba(196,163,90,0.05); }
+  .option.selected { border-color: var(--gold); background: rgba(196,163,90,0.1); }
+  .option-letter {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.72rem; font-weight: 600; flex-shrink: 0;
+    color: rgba(255,255,255,0.4); transition: all 0.2s;
+    margin-top: 1px;
+  }
+  .option.selected .option-letter { background: var(--gold); border-color: var(--gold); color: var(--black); }
+  .option-text { font-size: 0.95rem; line-height: 1.55; color: rgba(255,255,255,0.75); font-weight: 300; }
+  .option.selected .option-text { color: var(--white); }
+
+  /* NAV BUTTONS */
+  .question-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 2.5rem;
+  }
+  .btn-prev {
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35);
+    background: none; border: none; cursor: pointer; transition: color 0.2s; padding: 0;
+  }
+  .btn-prev:hover { color: rgba(255,255,255,0.7); }
+  .btn-next {
+    background: var(--gold); color: var(--black);
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 0.8rem 2rem; border-radius: 4px;
+    border: none; cursor: pointer; transition: all 0.2s;
+    opacity: 0.3; pointer-events: none;
+  }
+  .btn-next.active { opacity: 1; pointer-events: all; }
+  .btn-next.active:hover { background: var(--gold-warm); transform: translateY(-1px); }
+
+  /* EMAIL GATE */
+  .email-gate {
+    text-align: center; padding: 2.5rem; margin-top: 1rem;
+    border: 1px solid rgba(196,163,90,0.2); border-radius: 12px;
+    background: rgba(196,163,90,0.04); animation: fadeUp 0.5s ease both;
+  }
+  .email-gate h3 {
+    font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900;
+    margin-bottom: 0.6rem;
+  }
+  .email-gate p {
+    font-size: 0.9rem; color: rgba(255,255,255,0.5); font-weight: 300;
+    margin-bottom: 1.75rem; line-height: 1.6; max-width: 440px; margin-left: auto; margin-right: auto;
+  }
+  .gate-form { text-align: left; max-width: 520px; margin: 0 auto; }
+  .gate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  .gate-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .gate-field label {
+    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+  .gate-field input {
+    width: 100%; background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--white); padding: 0.75rem 1rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    border-radius: 6px; outline: none; transition: border-color 0.2s;
+  }
+  .gate-field input:focus { border-color: var(--gold); }
+  .gate-field input::placeholder { color: rgba(255,255,255,0.2); }
+  .btn-gate {
+    width: 100%; background: var(--gold); color: var(--black);
+    border: none; padding: 0.95rem 2rem; font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; cursor: pointer; border-radius: 4px;
+    transition: background 0.2s; margin-top: 0.5rem;
+  }
+  .btn-gate:hover { background: var(--gold-warm); }
 
   /* LOADING */
-  #loading-screen { display: none; text-align: center; padding: 80px 20px; }
-  .loading-icon { width: 64px; height: 64px; margin: 0 auto 32px; }
-  .loading-ring { fill: none; stroke: var(--gold); stroke-width: 2; stroke-dasharray: 150; stroke-dashoffset: 0; animation: spin 1.4s linear infinite; transform-origin: center; }
-  @keyframes spin { to { stroke-dashoffset: -150; } }
-  #loading-screen h2 { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 500; color: var(--black); margin-bottom: 12px; }
-  #loading-screen p { font-size: 16px; color: var(--mid); font-weight: 300; }
+  .loading {
+    text-align: center; padding: 4rem 2rem; animation: fadeUp 0.5s ease both;
+  }
+  .loading-spinner {
+    width: 56px; height: 56px; margin: 0 auto 2rem;
+    border: 2px solid rgba(196,163,90,0.2);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 1.2s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading h3 {
+    font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .loading p { font-size: 0.9rem; color: rgba(255,255,255,0.4); font-weight: 300; }
 
-  /* REPORT */
-  #report-screen { display: none; }
-  .report-header { background: var(--white); padding: 52px; margin-bottom: 2px; border-top: 4px solid var(--gold); border-bottom: 1px solid var(--border); }
-  .report-org { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); margin-bottom: 8px; }
-  .report-title { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 500; color: var(--black); margin-bottom: 28px; }
-  .score-row { display: flex; align-items: center; gap: 36px; }
-  .score-big { font-family: 'Cormorant Garamond', serif; font-size: 88px; font-weight: 400; color: var(--gold); line-height: 1; }
-  .score-level { font-size: 24px; font-weight: 500; color: var(--black); margin-bottom: 8px; }
-  .score-sub { font-size: 15px; color: var(--mid); font-weight: 300; }
-  .badge { display: inline-block; padding: 7px 18px; border-radius: 2px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
-  .badge-low { background: rgba(39,174,96,0.15); color: #27ae60; }
-  .badge-medium { background: rgba(243,156,18,0.15); color: #e67e22; }
-  .badge-high { background: rgba(192,57,43,0.15); color: #c0392b; }
-  .badge-critical { background: rgba(192,57,43,0.25); color: #c0392b; }
-  .report-section { background: var(--white); border: 1px solid var(--border); padding: 44px; margin-bottom: 2px; }
-  .report-section h3 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: var(--black); margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
-  .report-section p { font-size: 16px; color: var(--dark); line-height: 1.8; font-weight: 300; }
-  .domain-bars { display: flex; flex-direction: column; gap: 18px; }
-  .domain-bar-label { display: flex; justify-content: space-between; margin-bottom: 7px; font-size: 14px; }
-  .domain-bar-name { color: var(--dark); }
-  .domain-bar-score { color: var(--gold); font-weight: 500; }
-  .domain-bar-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
-  .domain-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-warm)); border-radius: 2px; transition: width 0.8s ease; }
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .col-card { padding: 28px; border: 1px solid var(--border); border-radius: 2px; }
-  .col-card h4 { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
-  .col-item { display: flex; gap: 10px; margin-bottom: 12px; font-size: 15px; color: var(--dark); line-height: 1.55; font-weight: 300; }
-  .col-bullet { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
-  .rec-cards { display: flex; flex-direction: column; gap: 14px; }
-  .rec-card { border: 1px solid var(--border); padding: 28px; border-radius: 2px; }
-  .rec-card-top { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
-  .rec-phase { font-size: 12px; padding: 4px 12px; background: var(--gold-pale); border: 1px solid rgba(201,168,76,0.3); color: var(--gold); border-radius: 2px; }
-  .rec-timeframe { font-size: 12px; padding: 4px 12px; background: var(--off-white); border: 1px solid var(--border); color: var(--mid); border-radius: 2px; }
-  .rec-impact-high { font-size: 12px; padding: 4px 12px; background: rgba(192,57,43,0.08); color: var(--red); border-radius: 2px; }
-  .rec-impact-med { font-size: 12px; padding: 4px 12px; background: rgba(243,156,18,0.1); color: #e67e22; border-radius: 2px; }
-  .rec-title { font-weight: 500; font-size: 16px; color: var(--black); margin-bottom: 8px; }
-  .rec-desc { font-size: 15px; color: var(--mid); line-height: 1.65; font-weight: 300; }
-  .quick-wins { display: flex; flex-direction: column; gap: 12px; }
-  .win-item { display: flex; gap: 18px; padding: 18px 22px; background: rgba(39,174,96,0.05); border: 1px solid rgba(39,174,96,0.15); border-radius: 2px; align-items: flex-start; }
-  .win-num { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--green); line-height: 1; flex-shrink: 0; }
-  .win-text { font-size: 15px; color: var(--dark); line-height: 1.6; font-weight: 300; }
-  .uae-note { background: var(--gold-pale); border: 1px solid rgba(201,168,76,0.25); border-radius: 2px; padding: 28px; }
-  .uae-note-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; display: block; }
-  .uae-note p { font-size: 15px; color: var(--dark); line-height: 1.75; font-weight: 300; }
-  .report-cta { background: var(--black); padding: 52px; text-align: center; }
-  .report-cta h3 { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 500; color: var(--white); margin-bottom: 14px; }
-  .report-cta p { font-size: 16px; color: rgba(255,255,255,0.7); margin-bottom: 32px; font-weight: 300; line-height: 1.75; }
-  .cta-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: var(--black); padding: 17px 42px; border-radius: 2px; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; font-weight: 600; transition: background 0.2s; }
-  .cta-btn:hover { background: var(--gold-warm); }
+  /* RESULTS */
+  .results { animation: fadeUp 0.5s ease both; }
+  .results-header { text-align: center; margin-bottom: 3rem; }
+  .results-eyebrow {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
+  }
+  .score-ring {
+    width: 140px; height: 140px; border-radius: 50%;
+    border: 4px solid rgba(255,255,255,0.08);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    margin: 2rem auto; position: relative;
+  }
+  .score-ring::before {
+    content: ''; position: absolute; inset: -4px; border-radius: 50%;
+    background: conic-gradient(var(--gold) var(--pct), transparent 0);
+    z-index: -1;
+  }
+  .score-ring::after {
+    content: ''; position: absolute; inset: 4px; border-radius: 50%;
+    background: var(--black); z-index: 0;
+  }
+  .score-num {
+    font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 900;
+    color: var(--gold); line-height: 1; position: relative; z-index: 1;
+  }
+  .score-label {
+    font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.4);
+    position: relative; z-index: 1; margin-top: 0.25rem;
+  }
+  .score-headline {
+    font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700;
+    color: var(--white); margin-bottom: 0.4rem;
+  }
+  .score-sub {
+    font-size: 0.9rem; color: rgba(255,255,255,0.35); font-weight: 300; line-height: 1.6;
+    max-width: 500px; margin: 0 auto;
+  }
 
-  /* FOOTER */
-  footer { background: var(--black); border-top: 1px solid #1a1a1a; padding: 40px 48px; }
-  .footer-inner { display: flex; align-items: center; justify-content: space-between; max-width: 1100px; margin: 0 auto; }
-  .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--white); }
-  .footer-brand span { color: var(--gold); }
-  .footer-center { font-size: 13px; color: rgba(255,255,255,0.7); text-align: center; line-height: 1.6; }
-  .footer-center a { color: var(--gold); text-decoration: none; }
-  .footer-center a:hover { color: var(--gold-warm); }
-  .footer-right { font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: 0.04em; text-align: right; }
+  /* DOMAIN BARS */
+  .dimensions { margin: 2.5rem 0; display: flex; flex-direction: column; gap: 1rem; }
+  .dim-row { display: flex; flex-direction: column; gap: 0.4rem; }
+  .dim-top { display: flex; justify-content: space-between; align-items: center; }
+  .dim-name { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; color: rgba(255,255,255,0.7); }
+  .dim-score { font-size: 0.78rem; font-weight: 600; color: var(--gold); }
+  .dim-bar { height: 4px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
+  .dim-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
 
-  @media (max-width: 640px) {
-    nav { padding: 0 20px; }
-    .assessment-wrap { padding: 32px 20px 60px; }
-    .intro-card, .question-card, .report-section, .report-header, .report-cta { padding: 28px; }
-    .name-fields, .domain-list, .two-col { grid-template-columns: 1fr; }
-    .score-row { flex-direction: column; gap: 16px; }
-    .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
-    .footer-right { text-align: center; }
+  /* REPORT SECTIONS */
+  .report-section {
+    margin: 2rem 0; padding: 1.5rem;
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 10px;
+  }
+  .report-section-title {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.75rem;
+  }
+  .report-section p {
+    font-size: 0.95rem; color: rgba(255,255,255,0.75); line-height: 1.75; font-weight: 300;
+  }
+
+  /* FINDINGS */
+  .findings { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin: 2rem 0; }
+  .finding-card { padding: 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); }
+  .finding-card.strength { border-color: rgba(196,163,90,0.2); background: rgba(196,163,90,0.05); }
+  .finding-card.gap { border-color: rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); }
+  .finding-title {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; margin-bottom: 0.75rem;
+  }
+  .finding-card.strength .finding-title { color: var(--gold); }
+  .finding-card.gap .finding-title { color: rgba(255,255,255,0.4); }
+  .finding-item {
+    font-size: 0.88rem; color: rgba(255,255,255,0.75); font-weight: 300;
+    line-height: 1.55; padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .finding-item:last-child { border-bottom: none; }
+
+  /* QUICK WINS */
+  .next-steps { margin: 2rem 0; }
+  .next-steps-title {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1rem;
+  }
+  .step-card {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .step-card:last-child { border-bottom: none; }
+  .step-num {
+    font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 900;
+    color: var(--gold); opacity: 0.4; flex-shrink: 0; width: 28px; line-height: 1.4;
+  }
+  .step-content {}
+  .step-service {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.25rem;
+  }
+  .step-desc { font-size: 0.9rem; color: rgba(255,255,255,0.75); font-weight: 300; line-height: 1.55; }
+
+  /* UAE ALIGNMENT */
+  .uae-note {
+    margin: 2rem 0; padding: 1.25rem 1.5rem;
+    border: 1px solid rgba(196,163,90,0.2); border-radius: 8px;
+    background: rgba(196,163,90,0.04);
+  }
+  .uae-label {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem;
+  }
+  .uae-note p {
+    font-size: 0.9rem; color: rgba(255,255,255,0.65); line-height: 1.7; font-weight: 300;
+  }
+
+  /* CTA */
+  .results-cta {
+    text-align: center; padding: 2.5rem; margin-top: 2rem;
+    border: 1px solid rgba(196,163,90,0.2); border-radius: 12px;
+    background: rgba(196,163,90,0.04);
+  }
+  .results-cta h3 {
+    font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900;
+    margin-bottom: 0.6rem;
+  }
+  .results-cta p {
+    font-size: 0.9rem; color: rgba(255,255,255,0.35); font-weight: 300;
+    margin-bottom: 1.5rem; line-height: 1.6;
+  }
+  .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-cta-primary {
+    background: var(--gold); color: var(--black);
+    font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 0.9rem 2rem; border-radius: 4px;
+    border: none; cursor: pointer; text-decoration: none; transition: all 0.2s;
+    display: inline-block;
+  }
+  .btn-cta-primary:hover { background: var(--gold-warm); transform: translateY(-1px); }
+  .btn-cta-secondary {
+    background: transparent; color: rgba(255,255,255,0.6);
+    font-size: 0.82rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 0.9rem 2rem; border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.1); cursor: pointer; text-decoration: none;
+    transition: all 0.2s; display: inline-block;
+  }
+  .btn-cta-secondary:hover { border-color: rgba(255,255,255,0.3); color: var(--white); }
+
+  /* PRINT BUTTON */
+  .print-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35);
+    background: none; border: 1px solid rgba(255,255,255,0.1);
+    padding: 0.6rem 1.25rem; border-radius: 4px; cursor: pointer;
+    transition: all 0.2s; margin-top: 1.5rem;
+  }
+  .print-btn:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+
+  .error-msg {
+    text-align: center; padding: 2rem;
+    color: rgba(255,100,100,0.8); font-size: 0.9rem; line-height: 1.7;
+  }
+  .error-msg button {
+    margin-top: 1rem; background: var(--gold); color: var(--black);
+    border: none; padding: 0.75rem 2rem; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+  }
+
+  .hidden { display: none !important; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media print {
+    .nav, .btn-cta-secondary, .print-btn, .btn-start { display: none !important; }
+    body { background: white; color: black; }
+    .score-num, .score-headline, .dim-name, .step-desc, .uae-note p { color: black !important; }
+    .score-ring::after { background: white; }
+    .results-cta { border: 1px solid #ccc; background: #f9f9f9; }
+  }
+
+  @media (max-width: 600px) {
+    .app { padding: 2rem 1.25rem 3rem; }
+    .findings { grid-template-columns: 1fr; }
+    .intro-meta { gap: 1.25rem; }
+    .nav { padding: 1rem 1.25rem; }
+    .gate-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="https://envisionedflow.com" class="nav-back">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 8H3M7 12l-4-4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Envisioned Flow™
-  </a>
-  <a href="https://envisionedflow.com" class="nav-brand">Envisioned Flow<span>™</span></a>
+<nav class="nav">
+  <a href="https://envisionedflow.com" class="nav-logo">Envisioned <span>Flow™</span></a>
+  <a href="https://envisionedflow.com" class="nav-back">← Back to site</a>
 </nav>
 
-<div class="page-header">
-  <div class="header-accent"></div>
-  <span class="header-eyebrow">Assessment Tool · 01 of 02</span>
-  <h1>AI Governance Readiness Assessment</h1>
-  <p>A structured diagnostic across six domains — aligned to UAE AI Charter, PDPL, NIST AI RMF, and ISO 42001.</p>
-</div>
+<div class="app">
 
-<div class="progress-bar-wrap">
-  <div class="progress-meta">
-    <span id="progress-label">Ready to begin</span>
-    <span id="progress-pct">0%</span>
-  </div>
-  <div class="progress-track">
-    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
-  </div>
-</div>
-
-<div class="assessment-wrap">
-  <div id="intro-screen">
-    <div class="intro-card">
-      <h2>About this assessment</h2>
-      <p>This diagnostic evaluates your organization's AI governance posture across six critical domains. Answer honestly — the report is most useful when it reflects reality, not aspiration.</p>
-      <p>You'll receive a scored maturity report with UAE regulatory alignment notes, domain-level gaps, prioritized recommendations, and quick wins your team can act on immediately.</p>
-      <div class="domain-list">
-        <div class="domain-item"><span class="domain-dot"></span>Governance Structure & Leadership</div>
-        <div class="domain-item"><span class="domain-dot"></span>AI Risk Management</div>
-        <div class="domain-item"><span class="domain-dot"></span>Data Governance & Privacy</div>
-        <div class="domain-item"><span class="domain-dot"></span>Transparency & Explainability</div>
-        <div class="domain-item"><span class="domain-dot"></span>Human Oversight & Control</div>
-        <div class="domain-item"><span class="domain-dot"></span>Regulatory Alignment</div>
-      </div>
-      <div class="name-fields">
-        <div class="field-group"><label>Organization name</label><input type="text" id="org-name" placeholder="Your Organization's Name" /></div>
-        <div class="field-group"><label>Your role</label><input type="text" id="user-role" placeholder="Chief AI Officer" /></div>
-        <div class="field-group"><label>Industry sector</label><input type="text" id="sector" placeholder="Financial Services" /></div>
-        <div class="field-group"><label>Organization size</label><input type="text" id="org-size" placeholder="500–2000 employees" /></div>
-      </div>
-      <button class="start-btn" onclick="startAssessment()">Begin Assessment <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <!-- INTRO -->
+  <div id="intro" class="intro">
+    <div class="intro-eyebrow">Free Assessment · UAE Regulatory Aligned</div>
+    <h1>AI Governance<br/><em>Readiness Assessment</em></h1>
+    <p>Answer 14 questions across six governance domains and receive a detailed maturity report — with regulatory alignment notes, priority gaps, and quick wins your team can act on immediately.</p>
+    <div class="intro-meta">
+      <div class="meta-item"><div class="meta-num">14</div><div class="meta-label">Questions</div></div>
+      <div class="meta-item"><div class="meta-num">6</div><div class="meta-label">Domains</div></div>
+      <div class="meta-item"><div class="meta-num">~15</div><div class="meta-label">Minutes</div></div>
     </div>
+    <div class="intro-domains">
+      <span class="domain-pill">Governance Structure</span>
+      <span class="domain-pill">Risk Management</span>
+      <span class="domain-pill">Data & Privacy</span>
+      <span class="domain-pill">Transparency</span>
+      <span class="domain-pill">Human Oversight</span>
+      <span class="domain-pill">Regulatory Alignment</span>
+    </div>
+    <button class="btn-start" onclick="startAssessment()">Begin Your Assessment →</button>
   </div>
 
-  <div id="question-screen">
-    <span class="domain-label" id="q-domain-label"></span>
-    <div class="question-card">
-      <p class="question-text" id="q-text"></p>
-      <div class="options-list" id="options-list"></div>
+  <!-- QUESTIONNAIRE -->
+  <div id="questionnaire" class="hidden">
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span class="progress-section" id="prog-section"></span>
+        <span class="progress-count" id="prog-count"></span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
     </div>
-    <div class="question-nav">
-      <span class="q-counter" id="q-counter"></span>
-      <div class="nav-btns">
-        <button class="btn-prev" id="btn-prev" onclick="prevQuestion()">← Back</button>
-        <button class="btn-next" id="btn-next" onclick="nextQuestion()" disabled>Next →</button>
+    <div class="question-screen" id="question-screen">
+      <div class="question-num" id="q-num"></div>
+      <div class="question-text" id="q-text"></div>
+      <div class="options" id="q-options"></div>
+      <div class="question-nav">
+        <button class="btn-prev" id="btn-prev" onclick="prevQ()">← Back</button>
+        <button class="btn-next" id="btn-next" onclick="nextQ()">Continue →</button>
       </div>
     </div>
   </div>
 
-  <div id="loading-screen">
-    <svg class="loading-icon" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" class="loading-ring"/></svg>
-    <h2>Analyzing your responses…</h2>
+  <!-- EMAIL GATE -->
+  <div id="email-gate" class="hidden">
+    <div class="email-gate">
+      <h3>Your report is ready.</h3>
+      <p>Enter your details to unlock your full AI Governance Maturity Report — including UAE regulatory alignment notes and prioritized recommendations.</p>
+      <form class="gate-form" id="lead-form" name="ai-governance-leads" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="ai-governance-leads"/>
+        <input type="hidden" name="bot-field"/>
+        <input type="hidden" name="score" id="hidden-score"/>
+        <input type="hidden" name="maturity_level" id="hidden-level"/>
+        <div class="gate-grid">
+          <div class="gate-field">
+            <label>Full Name *</label>
+            <input type="text" name="name" required placeholder="Your name"/>
+          </div>
+          <div class="gate-field">
+            <label>Work Email *</label>
+            <input type="email" name="email" required placeholder="you@company.com"/>
+          </div>
+          <div class="gate-field">
+            <label>Organization</label>
+            <input type="text" name="organization" placeholder="Your Organization's Name"/>
+          </div>
+          <div class="gate-field">
+            <label>Your Role</label>
+            <input type="text" name="role" placeholder="Chief AI Officer"/>
+          </div>
+        </div>
+        <button type="submit" class="btn-gate">Unlock My Report →</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div id="loading" class="hidden loading">
+    <div class="loading-spinner"></div>
+    <h3>Analyzing your responses…</h3>
     <p>Generating your governance maturity report. This takes about 15 seconds.</p>
   </div>
 
-  <div id="report-screen"></div>
+  <!-- RESULTS -->
+  <div id="results" class="hidden results">
+    <div class="results-header">
+      <div class="results-eyebrow">Your AI Governance Maturity Report</div>
+      <div class="score-ring" id="score-ring">
+        <div class="score-num" id="score-num">--</div>
+        <div class="score-label">/ 100</div>
+      </div>
+      <h2 id="score-headline" class="score-headline"></h2>
+      <p class="score-sub" id="score-sub"></p>
+    </div>
+
+    <div class="dimensions" id="dimensions"></div>
+
+    <div id="executive-summary" class="report-section">
+      <div class="report-section-title">Executive Summary</div>
+      <p id="summary-text"></p>
+    </div>
+
+    <div class="findings" id="findings"></div>
+
+    <div class="next-steps">
+      <div class="next-steps-title">Quick Wins — Completable Within 2 Weeks</div>
+      <div id="steps-list"></div>
+    </div>
+
+    <div class="next-steps" style="margin-top:1.5rem;">
+      <div class="next-steps-title">Priority Recommendations</div>
+      <div id="recs-list"></div>
+    </div>
+
+    <div class="uae-note" id="uae-note">
+      <div class="uae-label">UAE AI Charter · UAE PDPL · UAE AI Strategy 2031</div>
+      <p id="uae-text"></p>
+    </div>
+
+    <div class="results-cta">
+      <h3>Your report identifies the gaps.<br/>We close them.</h3>
+      <p>Book a Flow Audit™ Review Session with an Envisioned Flow™ strategist — we'll walk through your governance gaps, prioritize what matters most, and leave you with a clear remediation plan.</p>
+      <div class="cta-buttons">
+        <a href="https://envisionedflow.com/#flow-audit" class="btn-cta-primary">Book a Flow Audit</a>
+        <button class="btn-cta-secondary" onclick="resetAssessment()">Retake Assessment</button>
+      </div>
+      <button class="print-btn" onclick="window.print()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5V1h8v4M3 10H1V6h12v4h-2M3 8h8v5H3z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Save as PDF
+      </button>
+    </div>
+  </div>
+
 </div>
 
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">Envisioned Flow<span>™</span></div>
-    <div class="footer-center">
-      This platform was designed and built by <a href="https://envisionedflow.com">Envisioned Flow™</a><br/>
-      <span style="color:rgba(255,255,255,0.4);font-size:12px;">Biztech Consulting FZ-LLC · Dubai, UAE</span>
-    </div>
-    <div class="footer-right">© 2025 All rights reserved.</div>
-  </div>
+<!-- Static form for Netlify detection -->
+<form name="ai-governance-leads" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="text" name="name"/>
+  <input type="email" name="email"/>
+  <input type="text" name="organization"/>
+  <input type="text" name="role"/>
+  <input type="hidden" name="score"/>
+  <input type="hidden" name="maturity_level"/>
+</form>
+
+<footer style="background:#0A0A0A;border-top:1px solid rgba(255,255,255,0.08);padding:28px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+  <div style="font-family:'DM Sans',sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.5);">Envisioned <span style="color:#C4A35A;">Flow™</span></div>
+  <div style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-align:center;">This platform was designed and built by <a href="https://envisionedflow.com" style="color:#C4A35A;text-decoration:none;">Envisioned Flow™</a><br/><span style="font-size:0.7rem;color:rgba(255,255,255,0.3);">Biztech Consulting FZ-LLC · Dubai, UAE</span></div>
+  <div style="font-size:0.72rem;color:rgba(255,255,255,0.25);">© 2025 All rights reserved.</div>
 </footer>
 
 <script>
 const QUESTIONS = [
-  { domain: "Governance Structure & Leadership", text: "Does your organization have a designated AI governance body or executive accountable for AI strategy and risk?", options: ["No formal AI governance exists — decisions are made ad hoc", "AI decisions sit with IT or product teams informally", "An AI steering committee exists but meets infrequently", "A formal AI governance board meets regularly with C-suite representation", "Mature AI governance with board-level oversight and published AI policy"] },
-  { domain: "Governance Structure & Leadership", text: "How are AI ethics and responsible AI principles embedded in your organization?", options: ["Not on our radar yet", "Discussed informally but no documented principles", "AI ethics principles documented but not operationalized", "Principles documented and integrated into project approval workflows", "Ethics review is mandatory at all AI project stages with external audit"] },
-  { domain: "Governance Structure & Leadership", text: "How does your organization handle AI-related decisions that cross department boundaries?", options: ["No cross-functional process exists", "Decisions escalate to a single executive on an ad hoc basis", "A RACI exists on paper but is rarely followed", "Clear decision-making framework followed consistently", "Federated governance model with domain councils and central oversight"] },
-  { domain: "AI Risk Management", text: "How does your organization identify and classify AI-related risks?", options: ["We don't have a formal AI risk process", "Risks are flagged by engineers during build, informally", "Risk is assessed at project start using a basic checklist", "Structured risk classification exists aligned to impact and likelihood", "Continuous AI risk monitoring with automated flagging and escalation paths"] },
-  { domain: "AI Risk Management", text: "What is your process for handling an AI system that produces harmful or biased outputs?", options: ["No defined process — we'd figure it out if it happened", "We'd escalate to engineering to investigate", "An incident response plan exists but hasn't been tested", "Documented incident response with defined SLAs and stakeholder comms", "Tested, rehearsed incident response with post-incident learning loops"] },
-  { domain: "AI Risk Management", text: "How do you assess third-party AI tools and vendor AI products before procurement?", options: ["We evaluate on features and cost only", "Some informal questions about data handling", "Basic due diligence checklist for AI procurement", "Structured AI vendor assessment aligned to risk classification", "Formal AI procurement policy with contractual governance requirements"] },
-  { domain: "Data Governance & Privacy", text: "How is personal data handled in your AI training and inference pipelines?", options: ["We don't have specific controls for AI data pipelines", "Engineers apply common sense data handling", "Data handling policies exist but aren't AI-specific", "AI-specific data governance policy with PDPL and GDPR alignment", "Privacy-by-design embedded in all AI pipelines with regular audits"] },
-  { domain: "Data Governance & Privacy", text: "Can you trace which data was used to train or fine-tune your AI systems?", options: ["No data lineage exists", "Some training datasets are documented inconsistently", "Training data is catalogued but not versioned or auditable", "Full training data lineage documented and versioned", "Automated data lineage tracking with audit trails and provenance records"] },
-  { domain: "Transparency & Explainability", text: "Can your organization explain how a specific AI decision was reached to an affected party?", options: ["No — our models are black boxes", "We can explain roughly how models work but not specific decisions", "Limited explainability for some models in lower-risk use cases", "Explainability tools deployed for high-risk AI decisions", "Full decision audit trail available to regulators and affected individuals"] },
-  { domain: "Transparency & Explainability", text: "Are users informed when they are interacting with or being assessed by an AI system?", options: ["No disclosure in place", "Disclosure exists for some products but not consistently", "Disclosure policy documented but implementation is inconsistent", "Consistent AI disclosure across all user-facing products", "Disclosure meets all UAE AI transparency requirements with user consent mechanisms"] },
-  { domain: "Human Oversight & Control", text: "Do humans review AI outputs before they affect high-stakes decisions (hiring, lending, medical, legal)?", options: ["AI decisions are fully automated with no human review", "Human review happens occasionally but isn't mandated", "Human-in-the-loop for some high-risk decisions", "Mandatory human review for all high-risk AI decisions with override capability", "Tiered oversight model — human review calibrated to risk level with documented thresholds"] },
-  { domain: "Human Oversight & Control", text: "Can your organization disable or roll back an AI system quickly if it behaves unexpectedly?", options: ["No kill-switch or rollback capability", "We could disable systems but it would take significant time", "Manual rollback possible but no tested procedure", "Documented rollback procedure tested at least annually", "Automated circuit breakers with real-time monitoring and instant disable capability"] },
-  { domain: "Regulatory Alignment", text: "How aligned is your AI program to UAE AI regulatory requirements (UAE AI Strategy 2031, UAE AI Charter, PDPL)?", options: ["Not assessed against UAE requirements", "Some awareness but no formal alignment exercise done", "Gap analysis completed but remediation not started", "Active remediation program underway against UAE requirements", "Full alignment achieved with ongoing monitoring for regulatory updates"] },
-  { domain: "Regulatory Alignment", text: "Is your organization prepared for mandatory AI regulatory reporting or audits?", options: ["Not prepared — no documentation exists", "Some documentation but not audit-ready", "Partial documentation with significant gaps", "Documentation largely complete with minor gaps to address", "Fully audit-ready with all required documentation and evidence packages"] },
+  { section:"Governance Structure", text:"Does your organization have a designated AI governance body or executive accountable for AI strategy and risk?", options:["No formal AI governance exists — decisions are made ad hoc","AI decisions sit with IT or product teams informally","An AI steering committee exists but meets infrequently","A formal AI governance board meets regularly with C-suite representation","Mature AI governance with board-level oversight and published AI policy"] },
+  { section:"Governance Structure", text:"How are AI ethics and responsible AI principles embedded in your organization?", options:["Not on our radar yet","Discussed informally but no documented principles","AI ethics principles documented but not operationalized","Principles documented and integrated into project approval workflows","Ethics review is mandatory at all AI project stages with external audit"] },
+  { section:"Governance Structure", text:"How does your organization handle AI-related decisions that cross department boundaries?", options:["No cross-functional process exists","Decisions escalate to a single executive on an ad hoc basis","A RACI exists on paper but is rarely followed","Clear decision-making framework followed consistently","Federated governance model with domain councils and central oversight"] },
+  { section:"AI Risk Management", text:"How does your organization identify and classify AI-related risks?", options:["We don't have a formal AI risk process","Risks are flagged by engineers during build, informally","Risk is assessed at project start using a basic checklist","Structured risk classification exists aligned to impact and likelihood","Continuous AI risk monitoring with automated flagging and escalation paths"] },
+  { section:"AI Risk Management", text:"What is your process for handling an AI system that produces harmful or biased outputs?", options:["No defined process — we'd figure it out if it happened","We'd escalate to engineering to investigate","An incident response plan exists but hasn't been tested","Documented incident response with defined SLAs and stakeholder comms","Tested, rehearsed incident response with post-incident learning loops"] },
+  { section:"AI Risk Management", text:"How do you assess third-party AI tools and vendor AI products before procurement?", options:["We evaluate on features and cost only","Some informal questions about data handling","Basic due diligence checklist for AI procurement","Structured AI vendor assessment aligned to risk classification","Formal AI procurement policy with contractual governance requirements"] },
+  { section:"Data Governance & Privacy", text:"How is personal data handled in your AI training and inference pipelines?", options:["We don't have specific controls for AI data pipelines","Engineers apply common sense data handling","Data handling policies exist but aren't AI-specific","AI-specific data governance policy with PDPL and GDPR alignment","Privacy-by-design embedded in all AI pipelines with regular audits"] },
+  { section:"Data Governance & Privacy", text:"Can you trace which data was used to train or fine-tune your AI systems?", options:["No data lineage exists","Some training datasets are documented inconsistently","Training data is catalogued but not versioned or auditable","Full training data lineage documented and versioned","Automated data lineage tracking with audit trails and provenance records"] },
+  { section:"Transparency & Explainability", text:"Can your organization explain how a specific AI decision was reached to an affected party?", options:["No — our models are black boxes","We can explain roughly how models work but not specific decisions","Limited explainability for some models in lower-risk use cases","Explainability tools deployed for high-risk AI decisions","Full decision audit trail available to regulators and affected individuals"] },
+  { section:"Transparency & Explainability", text:"Are users informed when they are interacting with or being assessed by an AI system?", options:["No disclosure in place","Disclosure exists for some products but not consistently","Disclosure policy documented but implementation is inconsistent","Consistent AI disclosure across all user-facing products","Disclosure meets all UAE AI transparency requirements with user consent mechanisms"] },
+  { section:"Human Oversight & Control", text:"Do humans review AI outputs before they affect high-stakes decisions (hiring, lending, medical, legal)?", options:["AI decisions are fully automated with no human review","Human review happens occasionally but isn't mandated","Human-in-the-loop for some high-risk decisions","Mandatory human review for all high-risk AI decisions with override capability","Tiered oversight model — human review calibrated to risk level with documented thresholds"] },
+  { section:"Human Oversight & Control", text:"Can your organization disable or roll back an AI system quickly if it behaves unexpectedly?", options:["No kill-switch or rollback capability","We could disable systems but it would take significant time","Manual rollback possible but no tested procedure","Documented rollback procedure tested at least annually","Automated circuit breakers with real-time monitoring and instant disable capability"] },
+  { section:"Regulatory Alignment", text:"How aligned is your AI program to UAE AI regulatory requirements (UAE AI Strategy 2031, UAE AI Charter, PDPL)?", options:["Not assessed against UAE requirements","Some awareness but no formal alignment exercise done","Gap analysis completed but remediation not started","Active remediation program underway against UAE requirements","Full alignment achieved with ongoing monitoring for regulatory updates"] },
+  { section:"Regulatory Alignment", text:"Is your organization prepared for mandatory AI regulatory reporting or audits?", options:["Not prepared — no documentation exists","Some documentation but not audit-ready","Partial documentation with significant gaps","Documentation largely complete with minor gaps to address","Fully audit-ready with all required documentation and evidence packages"] },
 ];
 
-let currentQ = 0; let answers = []; let orgData = {};
+const DOMAINS = ["Governance Structure","AI Risk Management","Data Governance & Privacy","Transparency & Explainability","Human Oversight & Control","Regulatory Alignment"];
+
+let current = 0;
+let answers = new Array(QUESTIONS.length).fill(null);
+let domainScores = {};
+let overallScore = 0;
 
 function startAssessment() {
-  orgData = { org: document.getElementById('org-name').value || 'Your Organization', role: document.getElementById('user-role').value || 'Executive', sector: document.getElementById('sector').value || 'Enterprise', size: document.getElementById('org-size').value || 'Mid-to-large' };
-  document.getElementById('intro-screen').style.display = 'none';
-  document.getElementById('question-screen').style.display = 'block';
-  answers = new Array(QUESTIONS.length).fill(null);
-  showQuestion(0);
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('questionnaire').classList.remove('hidden');
+  renderQuestion();
 }
 
-function showQuestion(idx) {
-  currentQ = idx;
-  const q = QUESTIONS[idx];
-  document.getElementById('q-domain-label').textContent = q.domain;
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  document.getElementById('q-num').textContent = `Question ${current + 1}`;
   document.getElementById('q-text').textContent = q.text;
-  document.getElementById('q-counter').textContent = `Question ${idx + 1} of ${QUESTIONS.length}`;
-  document.getElementById('btn-prev').style.display = idx === 0 ? 'none' : 'inline-flex';
-  document.getElementById('btn-next').textContent = idx === QUESTIONS.length - 1 ? 'Generate Report →' : 'Next →';
-  updateProgress(idx);
-  const list = document.getElementById('options-list');
-  list.innerHTML = '';
-  const letters = ['A','B','C','D','E'];
-  q.options.forEach((opt, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'option-btn' + (answers[idx] === i ? ' selected' : '');
-    btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span class="option-text">${opt}</span>`;
-    btn.onclick = () => selectOption(i);
-    list.appendChild(btn);
+  document.getElementById('prog-section').textContent = q.section;
+  document.getElementById('prog-count').textContent = `${current + 1} of ${QUESTIONS.length}`;
+  document.getElementById('prog-fill').style.width = `${(current / QUESTIONS.length) * 100}%`;
+
+  const opts = document.getElementById('q-options');
+  opts.innerHTML = '';
+  q.options.forEach((text, i) => {
+    const div = document.createElement('div');
+    div.className = 'option' + (answers[current] === i ? ' selected' : '');
+    div.innerHTML = `<div class="option-letter">${['A','B','C','D','E'][i]}</div><div class="option-text">${text}</div>`;
+    div.onclick = () => selectOption(i);
+    opts.appendChild(div);
   });
-  document.getElementById('btn-next').disabled = answers[idx] === null;
+
+  document.getElementById('btn-prev').style.visibility = current === 0 ? 'hidden' : 'visible';
+  const nextBtn = document.getElementById('btn-next');
+  nextBtn.textContent = current === QUESTIONS.length - 1 ? 'See My Results →' : 'Continue →';
+  nextBtn.classList.toggle('active', answers[current] !== null);
+
+  const screen = document.getElementById('question-screen');
+  screen.style.animation = 'none';
+  screen.offsetHeight;
+  screen.style.animation = 'fadeUp 0.35s ease both';
 }
 
 function selectOption(i) {
-  answers[currentQ] = i;
-  document.querySelectorAll('.option-btn').forEach((b, idx) => b.classList.toggle('selected', idx === i));
-  document.getElementById('btn-next').disabled = false;
-  // Auto-advance after short delay
+  answers[current] = i;
+  document.querySelectorAll('.option').forEach((el, idx) => {
+    el.classList.toggle('selected', idx === i);
+  });
+  document.getElementById('btn-next').classList.add('active');
   setTimeout(() => {
-    if (currentQ === QUESTIONS.length - 1) {
-      generateReport();
+    if (current === QUESTIONS.length - 1) {
+      showEmailGate();
     } else {
-      showQuestion(currentQ + 1);
+      current++;
+      renderQuestion();
     }
-  }, 400);
+  }, 420);
 }
 
-function nextQuestion() {
-  if (answers[currentQ] === null) return;
-  if (currentQ === QUESTIONS.length - 1) generateReport();
-  else showQuestion(currentQ + 1);
+function nextQ() {
+  if (answers[current] === null) return;
+  if (current === QUESTIONS.length - 1) { showEmailGate(); return; }
+  current++;
+  renderQuestion();
 }
 
-function prevQuestion() { if (currentQ > 0) showQuestion(currentQ - 1); }
+function prevQ() {
+  if (current === 0) return;
+  current--;
+  renderQuestion();
+}
 
-function updateProgress(idx) {
-  const answered = answers.filter(a => a !== null).length;
-  const pct = Math.round((answered / QUESTIONS.length) * 100);
-  document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('progress-pct').textContent = pct + '%';
-  document.getElementById('progress-label').textContent = `Domain: ${QUESTIONS[idx].domain}`;
+function calculateScores() {
+  const domainData = {};
+  DOMAINS.forEach(d => domainData[d] = []);
+  QUESTIONS.forEach((q, i) => {
+    domainData[q.section].push(answers[i]);
+  });
+  DOMAINS.forEach(d => {
+    const vals = domainData[d];
+    domainScores[d] = Math.round((vals.reduce((a,b) => a+b,0) / (vals.length * 4)) * 100);
+  });
+  overallScore = Math.round(Object.values(domainScores).reduce((a,b) => a+b,0) / DOMAINS.length);
+}
+
+function showEmailGate() {
+  document.getElementById('questionnaire').classList.add('hidden');
+  calculateScores();
+  document.getElementById('hidden-score').value = overallScore;
+  const headline = overallScore >= 75 ? 'Advanced' : overallScore >= 50 ? 'Developing' : overallScore >= 30 ? 'Initial' : 'Critical';
+  document.getElementById('hidden-level').value = headline;
+  document.getElementById('email-gate').classList.remove('hidden');
+
+  document.getElementById('lead-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    // Submit to Netlify
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(document.getElementById('lead-form'))).toString()
+    }).catch(() => {});
+    document.getElementById('email-gate').classList.add('hidden');
+    generateReport();
+  });
 }
 
 async function generateReport() {
-  document.getElementById('question-screen').style.display = 'none';
-  document.getElementById('loading-screen').style.display = 'block';
-  document.getElementById('progress-fill').style.width = '100%';
-  document.getElementById('progress-pct').textContent = '100%';
-  document.getElementById('progress-label').textContent = 'Generating report…';
-  const domains = {};
-  QUESTIONS.forEach((q, i) => { if (!domains[q.domain]) domains[q.domain] = []; domains[q.domain].push({ question: q.text, answer: q.options[answers[i]], score: answers[i] }); });
-  const domainScores = {};
-  Object.entries(domains).forEach(([d, qs]) => { const avg = qs.reduce((sum, q) => sum + q.score, 0) / qs.length; domainScores[d] = Math.round((avg / 4) * 100); });
-  const overallScore = Math.round(Object.values(domainScores).reduce((a, b) => a + b, 0) / Object.values(domainScores).length);
-  const prompt = `You are an AI governance expert producing a structured maturity report for an enterprise organization in the UAE.\n\nOrganization: ${orgData.org}\nRole: ${orgData.role}\nSector: ${orgData.sector}\nSize: ${orgData.size}\n\nDomain Scores: ${JSON.stringify(domainScores)}\nOverall Score: ${overallScore}/100\n\nResponses:\n${Object.entries(domains).map(([d, qs]) => `${d}:\n${qs.map(q => `Q: ${q.question}\nA: ${q.answer}`).join('\n')}`).join('\n\n')}\n\nReturn ONLY valid JSON with this structure:\n{"maturity_level":"Initial/Developing/Defined/Managed/Optimizing","executive_summary":"3-4 sentences","delivery_risk":"Low/Medium/High/Critical","delivery_risk_rationale":"1 sentence","strengths":["s1","s2","s3"],"critical_gaps":["g1","g2","g3"],"quick_wins":["w1","w2","w3"],"recommendations":[{"title":"","description":"","phase":"Envision/Architect/Automate/Amplify/Govern","timeframe":"","impact":"High/Medium"},{"title":"","description":"","phase":"","timeframe":"","impact":""},{"title":"","description":"","phase":"","timeframe":"","impact":""},{"title":"","description":"","phase":"","timeframe":"","impact":""}],"uae_alignment_note":"2-3 sentences on UAE AI Charter, PDPL, UAE AI Strategy 2031","next_step":"1 sentence on engaging Envisioned Flow"}`;
+  document.getElementById('loading').classList.remove('hidden');
+
+  const domainSummary = Object.entries(domainScores).map(([d,s]) => `${d}: ${s}/100`).join(', ');
+  const responses = QUESTIONS.map((q,i) => `Q: ${q.text}\nA: ${q.options[answers[i]]}`).join('\n\n');
+
+  const prompt = `You are an AI governance expert producing a maturity report for an enterprise organization in the UAE.
+
+Overall Score: ${overallScore}/100
+Domain Scores: ${domainSummary}
+
+Responses:
+${responses}
+
+Return ONLY valid JSON with this exact structure (no markdown, no preamble):
+{
+  "maturity_level": "one of: Initial / Developing / Defined / Managed / Optimizing",
+  "executive_summary": "3-4 sentence narrative summarizing their governance posture",
+  "strengths": ["strength 1", "strength 2", "strength 3"],
+  "critical_gaps": ["gap 1", "gap 2", "gap 3"],
+  "quick_wins": [
+    {"title": "win title", "desc": "specific action completable in under 2 weeks"},
+    {"title": "win title", "desc": "specific action"},
+    {"title": "win title", "desc": "specific action"}
+  ],
+  "recommendations": [
+    {"title": "rec title", "desc": "2-3 sentence description", "phase": "Envision/Architect/Automate/Amplify/Govern", "timeframe": "e.g. 30 days"},
+    {"title": "rec title", "desc": "...", "phase": "...", "timeframe": "..."},
+    {"title": "rec title", "desc": "...", "phase": "...", "timeframe": "..."}
+  ],
+  "uae_alignment": "2-3 sentences on UAE AI Charter, UAE PDPL, and UAE AI Strategy 2031 alignment based on their specific responses"
+}`;
+
   try {
-    const res = await fetch('/.netlify/functions/analyze-governance', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt }) });
+    const res = await fetch('/.netlify/functions/analyze-governance', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
     const data = await res.json();
     const text = data.content?.[0]?.text || '';
     const report = JSON.parse(text.replace(/```json|```/g, '').trim());
-    renderReport(report, domainScores, overallScore);
+    renderReport(report);
   } catch(err) {
-    document.getElementById('loading-screen').innerHTML = `<h2 style="color:var(--red)">Something went wrong</h2><p style="color:var(--mid);margin-top:12px;">Error: ${err.message}</p><button onclick="location.reload()" style="margin-top:24px;padding:13px 28px;background:var(--black);color:var(--white);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;border-radius:2px;">Try Again</button>`;
+    document.getElementById('loading').classList.add('hidden');
+    document.getElementById('results').classList.remove('hidden');
+    document.getElementById('results').innerHTML = `
+      <div class="error-msg">
+        <p>Something went wrong generating your report.</p>
+        <p style="font-size:0.8rem;margin-top:0.5rem;opacity:0.6;">Error: ${err.message}</p>
+        <button onclick="location.reload()">Try Again</button>
+      </div>`;
   }
 }
 
-function renderReport(r, domainScores, overallScore) {
-  document.getElementById('loading-screen').style.display = 'none';
-  const rs = document.getElementById('report-screen');
-  rs.style.display = 'block';
-  const riskBadge = { Low: 'badge-low', Medium: 'badge-medium', High: 'badge-high', Critical: 'badge-critical' };
-  rs.innerHTML = `
-    <div class="report-header">
-      <div class="report-org">${orgData.org} · ${orgData.sector} · ${new Date().toLocaleDateString('en-GB',{month:'long',year:'numeric'})}</div>
-      <div class="report-title">AI Governance Readiness Report</div>
-      <div class="score-row">
-        <div class="score-big">${overallScore}</div>
-        <div class="score-info">
-          <div class="score-level">${r.maturity_level}</div>
-          <div class="score-sub">Overall Governance Maturity Score (out of 100)</div>
-          <div style="margin-top:14px;"><span class="badge ${riskBadge[r.delivery_risk]||'badge-medium'}">${r.delivery_risk} Risk</span></div>
-          <div style="font-size:14px;color:var(--mid);margin-top:10px;font-weight:300;">${r.delivery_risk_rationale}</div>
+function renderReport(r) {
+  document.getElementById('loading').classList.add('hidden');
+  document.getElementById('results').classList.remove('hidden');
+
+  // Score ring
+  document.getElementById('score-num').textContent = overallScore;
+  document.getElementById('score-ring').style.setProperty('--pct', `${overallScore * 3.6}deg`);
+
+  // Headline
+  let headline, sub;
+  if (overallScore >= 75) {
+    headline = r.maturity_level + ' — Strong Governance Foundation';
+    sub = 'Your organization demonstrates mature AI governance practices. Focus now on continuous improvement and staying ahead of regulatory evolution.';
+  } else if (overallScore >= 50) {
+    headline = r.maturity_level + ' — Governance Framework Taking Shape';
+    sub = 'You have meaningful governance foundations in place, but critical gaps remain. Targeted investment in your weakest domains will significantly reduce regulatory and operational risk.';
+  } else if (overallScore >= 30) {
+    headline = r.maturity_level + ' — Significant Governance Gaps';
+    sub = 'Your organization has begun the governance journey but faces material gaps that create regulatory and reputational risk. Structured remediation is needed.';
+  } else {
+    headline = r.maturity_level + ' — Immediate Action Required';
+    sub = 'Your governance posture presents significant risk across multiple domains. A structured AI governance program is an urgent priority.';
+  }
+  document.getElementById('score-headline').textContent = headline;
+  document.getElementById('score-sub').textContent = sub;
+
+  // Executive summary
+  document.getElementById('summary-text').textContent = r.executive_summary;
+
+  // Domain bars
+  const dimEl = document.getElementById('dimensions');
+  dimEl.innerHTML = '';
+  DOMAINS.forEach(d => {
+    const pct = domainScores[d];
+    const color = pct >= 65 ? '#C4A35A' : pct >= 40 ? '#8C7748' : '#555';
+    dimEl.innerHTML += `
+      <div class="dim-row">
+        <div class="dim-top">
+          <span class="dim-name">${d}</span>
+          <span class="dim-score">${pct}/100</span>
         </div>
-      </div>
+        <div class="dim-bar"><div class="dim-fill" style="width:${pct}%;background:${color};"></div></div>
+      </div>`;
+  });
+
+  // Strengths & gaps
+  document.getElementById('findings').innerHTML = `
+    <div class="finding-card strength">
+      <div class="finding-title">✦ Strengths</div>
+      ${r.strengths.map(s => `<div class="finding-item">${s}</div>`).join('')}
     </div>
-    <div class="report-section"><h3>Executive Summary</h3><p>${r.executive_summary}</p></div>
-    <div class="report-section"><h3>Domain Scores</h3><div class="domain-bars">${Object.entries(domainScores).map(([d,s])=>`<div class="domain-bar-row"><div class="domain-bar-label"><span class="domain-bar-name">${d}</span><span class="domain-bar-score">${s}/100</span></div><div class="domain-bar-track"><div class="domain-bar-fill" style="width:${s}%"></div></div></div>`).join('')}</div></div>
-    <div class="report-section"><h3>Strengths & Critical Gaps</h3><div class="two-col"><div class="col-card"><h4>Strengths</h4>${r.strengths.map(s=>`<div class="col-item"><span class="col-bullet">✓</span>${s}</div>`).join('')}</div><div class="col-card"><h4>Critical Gaps</h4>${r.critical_gaps.map(g=>`<div class="col-item"><span class="col-bullet" style="color:var(--red)">!</span>${g}</div>`).join('')}</div></div></div>
-    <div class="report-section"><h3>Quick Wins <span style="font-size:14px;font-weight:300;color:var(--mid);font-family:'DM Sans',sans-serif">— completable within 2 weeks</span></h3><div class="quick-wins">${r.quick_wins.map((w,i)=>`<div class="win-item"><span class="win-num">0${i+1}</span><span class="win-text">${w}</span></div>`).join('')}</div></div>
-    <div class="report-section"><h3>Priority Recommendations</h3><div class="rec-cards">${r.recommendations.map(rec=>`<div class="rec-card"><div class="rec-card-top"><span class="rec-phase">${rec.phase}</span><span class="rec-timeframe">${rec.timeframe}</span><span class="${rec.impact==='High'?'rec-impact-high':'rec-impact-med'}">${rec.impact} Impact</span></div><div class="rec-title">${rec.title}</div><div class="rec-desc">${rec.description}</div></div>`).join('')}</div></div>
-    <div class="report-section"><h3>UAE Regulatory Alignment</h3><div class="uae-note"><span class="uae-note-label">UAE AI Charter · UAE PDPL · UAE AI Strategy 2031</span><p>${r.uae_alignment_note}</p></div></div>
-    <div class="report-cta"><h3>Your report identifies the gaps.<br/>We close them.</h3><p>${r.next_step}</p><a href="https://envisionedflow.com/#contact" class="cta-btn">Book a Strategy Call →</a></div>`;
-  rs.scrollIntoView({ behavior: 'smooth' });
+    <div class="finding-card gap">
+      <div class="finding-title">▲ Critical Gaps</div>
+      ${r.critical_gaps.map(g => `<div class="finding-item">${g}</div>`).join('')}
+    </div>`;
+
+  // Quick wins
+  document.getElementById('steps-list').innerHTML = r.quick_wins.map((w, i) => `
+    <div class="step-card">
+      <div class="step-num">0${i+1}</div>
+      <div class="step-content">
+        <div class="step-service">${w.title}</div>
+        <div class="step-desc">${w.desc}</div>
+      </div>
+    </div>`).join('');
+
+  // Recommendations
+  document.getElementById('recs-list').innerHTML = r.recommendations.map((rec, i) => `
+    <div class="step-card">
+      <div class="step-num">0${i+1}</div>
+      <div class="step-content">
+        <div class="step-service">${rec.phase} · ${rec.timeframe}</div>
+        <div class="step-service" style="margin-top:0.2rem;opacity:0.8;">${rec.title}</div>
+        <div class="step-desc">${rec.desc}</div>
+      </div>
+    </div>`).join('');
+
+  // UAE alignment
+  document.getElementById('uae-text').textContent = r.uae_alignment;
+
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetAssessment() {
+  current = 0;
+  answers = new Array(QUESTIONS.length).fill(null);
+  domainScores = {};
+  overallScore = 0;
+  document.getElementById('results').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo(0,0);
 }
 </script>
+
 </body>
 </html>
