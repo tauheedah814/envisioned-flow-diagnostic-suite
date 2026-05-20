@@ -840,6 +840,26 @@ function renderReport(r) {
   document.getElementById('uae-text').textContent = r.uae_alignment;
 
   document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+
+  // Send full report email
+  setTimeout(() => {
+    const lead = window._leadData || {};
+    const reportHtml = document.getElementById('results').innerHTML;
+    fetch('/.netlify/functions/send-report', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: lead.name || '',
+        email: lead.email || '',
+        organization: lead.organization || '',
+        role: lead.role || '',
+        score: overallScore,
+        maturity_level: r.maturity_level,
+        report_html: reportHtml,
+        assessment_type: 'AI Governance Readiness Assessment'
+      })
+    }).catch(() => {});
+  }, 500);
 }
 
 function resetAssessment() {
