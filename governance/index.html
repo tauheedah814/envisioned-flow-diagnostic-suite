@@ -693,11 +693,18 @@ function showEmailGate() {
 
   document.getElementById('lead-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    // Submit to Netlify
+    const f = document.getElementById('lead-form');
+    // Capture values before hiding anything
+    const leadName = f.querySelector('[name="name"]').value || '';
+    const leadEmail = f.querySelector('[name="email"]').value || '';
+    const leadOrg = f.querySelector('[name="organization"]').value || '';
+    const leadRole = f.querySelector('[name="role"]').value || '';
+    window._leadData = { name: leadName, email: leadEmail, organization: leadOrg, role: leadRole };
+    // Submit to Netlify Forms
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(new FormData(document.getElementById('lead-form'))).toString()
+      body: new URLSearchParams(new FormData(f)).toString()
     }).catch(() => {});
     document.getElementById('email-gate').classList.add('hidden');
     generateReport();
