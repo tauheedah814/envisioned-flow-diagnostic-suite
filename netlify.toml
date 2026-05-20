@@ -3,8 +3,13 @@
   functions = "netlify/functions"
 
 [[redirects]]
-  from = "https://aiready.envisionedflow.com/*"
-  to = "https://aiready.envisionedflow.com/flow-audit"
-  status = 302
+  from = "https://governance.envisionedflow.com"
+  to = "/governance/"
+  status = 301
   force = true
-  conditions = {Host = ["aiready.envisionedflow.com"]}
+
+[[redirects]]
+  from = "https://governance.envisionedflow.com/"
+  to = "/governance/"
+  status = 301
+  force = true
