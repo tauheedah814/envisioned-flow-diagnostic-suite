@@ -501,6 +501,12 @@
             <input type="text" name="role" placeholder="Chief AI Officer"/>
           </div>
         </div>
+        <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:1rem;">
+          <input type="checkbox" id="privacy-consent" name="privacy_consent" required style="margin-top:3px;accent-color:var(--gold);"/>
+          <label for="privacy-consent" style="font-size:0.75rem;color:rgba(255,255,255,0.4);line-height:1.5;font-weight:300;">
+            I agree to the <a href="https://www.envisionedflow.com/privacy-policy" target="_blank" style="color:var(--gold);text-decoration:none;">Privacy Policy</a> and consent to Envisioned Flow™ processing my data to deliver and follow up on my assessment report.
+          </label>
+        </div>
         <button type="submit" class="btn-gate">Unlock My Report →</button>
       </form>
     </div>
@@ -573,12 +579,13 @@
   <input type="text" name="role"/>
   <input type="hidden" name="score"/>
   <input type="hidden" name="maturity_level"/>
+  <input type="checkbox" name="privacy_consent"/>
 </form>
 
 <footer style="background:#0A0A0A;border-top:1px solid rgba(255,255,255,0.08);padding:28px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
   <div style="font-family:'DM Sans',sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.5);">Envisioned <span style="color:#C4A35A;">Flow™</span></div>
   <div style="font-size:0.75rem;color:rgba(255,255,255,0.5);text-align:center;">This platform was designed and built by <a href="https://envisionedflow.com" style="color:#C4A35A;text-decoration:none;">Envisioned Flow™</a><br/><span style="font-size:0.7rem;color:rgba(255,255,255,0.3);">Biztech Consulting FZ-LLC · Dubai, UAE</span></div>
-  <div style="font-size:0.72rem;color:rgba(255,255,255,0.25);">© 2025 All rights reserved.</div>
+  <div style="font-size:0.72rem;color:rgba(255,255,255,0.25);">© 2026 All rights reserved. &nbsp;·&nbsp; <a href="https://www.envisionedflow.com/privacy-policy" style="color:rgba(255,255,255,0.25);text-decoration:none;">Privacy Policy</a></div>
 </footer>
 
 <script>
@@ -693,18 +700,11 @@ function showEmailGate() {
 
   document.getElementById('lead-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    const f = document.getElementById('lead-form');
-    // Capture values before hiding anything
-    const leadName = f.querySelector('[name="name"]').value || '';
-    const leadEmail = f.querySelector('[name="email"]').value || '';
-    const leadOrg = f.querySelector('[name="organization"]').value || '';
-    const leadRole = f.querySelector('[name="role"]').value || '';
-    window._leadData = { name: leadName, email: leadEmail, organization: leadOrg, role: leadRole };
-    // Submit to Netlify Forms
+    // Submit to Netlify
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(new FormData(f)).toString()
+      body: new URLSearchParams(new FormData(document.getElementById('lead-form'))).toString()
     }).catch(() => {});
     document.getElementById('email-gate').classList.add('hidden');
     generateReport();
@@ -847,26 +847,6 @@ function renderReport(r) {
   document.getElementById('uae-text').textContent = r.uae_alignment;
 
   document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
-
-  // Send full report email
-  setTimeout(() => {
-    const lead = window._leadData || {};
-    const reportHtml = document.getElementById('results').innerHTML;
-    fetch('/.netlify/functions/send-report', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: lead.name || '',
-        email: lead.email || '',
-        organization: lead.organization || '',
-        role: lead.role || '',
-        score: overallScore,
-        maturity_level: r.maturity_level,
-        report_html: reportHtml,
-        assessment_type: 'AI Governance Readiness Assessment'
-      })
-    }).catch(() => {});
-  }, 500);
 }
 
 function resetAssessment() {
