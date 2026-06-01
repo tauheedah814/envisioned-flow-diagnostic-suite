@@ -700,11 +700,19 @@ function showEmailGate() {
 
   document.getElementById('lead-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    // Submit to Netlify
+    const f = document.getElementById('lead-form');
+    // Capture lead data BEFORE hiding anything
+    window._leadData = {
+      name: f.querySelector('[name="name"]').value || '',
+      email: f.querySelector('[name="email"]').value || '',
+      organization: f.querySelector('[name="organization"]').value || '',
+      role: f.querySelector('[name="role"]').value || ''
+    };
+    // Submit to Netlify Forms
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(new FormData(document.getElementById('lead-form'))).toString()
+      body: new URLSearchParams(new FormData(f)).toString()
     }).catch(() => {});
     document.getElementById('email-gate').classList.add('hidden');
     generateReport();
@@ -847,6 +855,25 @@ function renderReport(r) {
   document.getElementById('uae-text').textContent = r.uae_alignment;
 
   document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+
+  // Send full report email to Tauheedah
+  setTimeout(() => {
+    const lead = window._leadData || {};
+    fetch('/.netlify/functions/send-report', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: lead.name || '',
+        email: lead.email || '',
+        organization: lead.organization || '',
+        role: lead.role || '',
+        score: overallScore,
+        maturity_level: r.maturity_level || '',
+        report_html: document.getElementById('results').innerHTML,
+        assessment_type: 'AI Governance Readiness Assessment'
+      })
+    }).catch(err => console.error('send-report error:', err));
+  }, 600);
 }
 
 function resetAssessment() {
