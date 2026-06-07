@@ -18,13 +18,14 @@ exports.handler = async function(event) {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 1500,
+        max_tokens: 2000,
         messages: [{ role: 'user', content: prompt }],
       }),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
+      console.log('Anthropic API error:', response.status, errorText);
       return {
         statusCode: response.status,
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
@@ -33,6 +34,9 @@ exports.handler = async function(event) {
     }
 
     const data = await response.json();
+    console.log('Anthropic response received, content length:', JSON.stringify(data).length);
+    console.log('Content array:', JSON.stringify(data.content));
+    
     return {
       statusCode: 200,
       headers: {
@@ -43,6 +47,7 @@ exports.handler = async function(event) {
     };
 
   } catch (err) {
+    console.log('Function error:', err.message);
     return {
       statusCode: 500,
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
