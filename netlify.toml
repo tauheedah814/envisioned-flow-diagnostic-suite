@@ -3,13 +3,19 @@
   functions = "netlify/functions"
 
 [[redirects]]
-  from = "https://governance.envisionedflow.com"
-  to = "/governance/"
-  status = 301
+  from = "/.netlify/functions/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
   force = true
 
 [[redirects]]
-  from = "https://governance.envisionedflow.com/"
+  from = "https://governance.envisionedflow.com"
   to = "/governance/"
-  status = 301
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://governance.envisionedflow.com/*"
+  to = "/governance/:splat"
+  status = 200
   force = true
