@@ -51,7 +51,7 @@ exports.handler = async function(event) {
     }
 
     const data = await response.json();
-    console.log('Response received, duration estimate ok');
+    console.log('Response received successfully');
     return {
       statusCode: 200,
       headers: {
