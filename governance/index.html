@@ -1073,5 +1073,18 @@ function resetAssessment() {
       </div>
     </div>
   </div>
+<script>
+  function openFAModal() {
+    document.getElementById("faModal").classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+  function closeFAModal() {
+    document.getElementById("faModal").classList.remove("active");
+    document.body.style.overflow = "";
+  }
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") closeFAModal();
+  });
+</script>
 </body>
 </html>
