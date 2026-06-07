@@ -422,139 +422,21 @@
     .gate-grid { grid-template-columns: 1fr; }
   }
 
-  /* Flow Audit Modal */
-  .fa-modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-  }
-  .fa-modal-overlay.active { display: flex; }
-  .fa-modal {
-    background: #111;
-    border: 0.5px solid rgba(201,168,76,0.3);
-    border-radius: 16px;
-    max-width: 520px;
-    width: 100%;
-    padding: 2.5rem;
-    position: relative;
-  }
-  .fa-modal-close {
-    position: absolute;
-    top: 1.25rem;
-    right: 1.5rem;
-    background: none;
-    border: none;
-    color: rgba(255,255,255,0.4);
-    font-size: 1.25rem;
-    cursor: pointer;
-    line-height: 1;
-  }
-  .fa-modal-close:hover { color: rgba(255,255,255,0.8); }
-  .fa-modal-label {
-    display: inline-block;
-    font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    padding: 0.25rem 0.75rem;
-    border-radius: 100px;
-    background: #C9A84C;
-    color: #0A0A0A;
-    margin-bottom: 1rem;
-  }
-  .fa-modal h3 {
-    font-family: "Playfair Display", serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 0.35rem;
-    line-height: 1.2;
-  }
-  .fa-modal-price {
-    font-size: 0.9rem;
-    color: #C9A84C;
-    font-weight: 500;
-    margin-bottom: 1.25rem;
-    letter-spacing: 0.02em;
-  }
-  .fa-modal-desc {
-    font-size: 0.9rem;
-    color: rgba(255,255,255,0.7);
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-  }
-  .fa-modal-steps {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 2rem;
-  }
-  .fa-modal-steps li {
-    display: flex;
-    gap: 0.75rem;
-    font-size: 0.875rem;
-    color: rgba(255,255,255,0.85);
-    line-height: 1.5;
-  }
-  .fa-modal-step-num {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: rgba(201,168,76,0.15);
-    border: 0.5px solid rgba(201,168,76,0.4);
-    color: #C9A84C;
-    font-size: 0.65rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-  .fa-modal-step-text strong {
-    display: block;
-    color: #fff;
-    font-weight: 500;
-    margin-bottom: 0.1rem;
-  }
-  .fa-modal-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .fa-modal-btn-primary {
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding: 0.9rem 1.5rem;
-    background: #C9A84C;
-    color: #0A0A0A;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: background 0.2s;
-  }
-  .fa-modal-btn-primary:hover { background: #b8913a; }
-  .fa-modal-btn-cancel {
-    background: none;
-    border: none;
-    color: rgba(255,255,255,0.4);
-    font-size: 0.8rem;
-    cursor: pointer;
-    text-align: center;
-    padding: 0.25rem;
-    width: 100%;
-  }
-  .fa-modal-btn-cancel:hover { color: rgba(255,255,255,0.7); }
+.ef-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:9999;align-items:center;justify-content:center;padding:1rem}
+.ef-overlay.ef-open{display:flex}
+.ef-modal{background:#111;border:1px solid rgba(201,168,76,0.4);border-radius:14px;max-width:500px;width:100%;padding:2rem;position:relative;max-height:90vh;overflow-y:auto}
+.ef-badge{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;border-radius:100px;background:#C9A84C;color:#0A0A0A;margin-bottom:.75rem}
+.ef-modal h3{font-size:1.4rem;font-weight:700;color:#fff;margin:0 0 .2rem;line-height:1.2}
+.ef-price{font-size:.85rem;color:#C9A84C;font-weight:500;margin-bottom:1rem}
+.ef-desc{font-size:.875rem;color:rgba(255,255,255,.65);line-height:1.6;margin-bottom:1.1rem}
+.ef-steps{list-style:none;margin:0 0 1.5rem;padding:0;display:flex;flex-direction:column;gap:.6rem}
+.ef-steps li{display:flex;gap:.6rem;font-size:.825rem;color:rgba(255,255,255,.8);line-height:1.5}
+.ef-num{width:18px;height:18px;border-radius:50%;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4);color:#C9A84C;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.ef-steps strong{display:block;color:#fff;font-weight:600;font-size:.875rem;margin-bottom:1px}
+.ef-pay{display:block;width:100%;text-align:center;padding:.8rem;background:#C9A84C;color:#0A0A0A;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:8px;border:none;cursor:pointer;margin-bottom:.5rem}
+.ef-pay:hover{background:#b8913a}
+.ef-cancel{background:none;border:none;color:rgba(255,255,255,.35);font-size:.8rem;cursor:pointer;width:100%;text-align:center;padding:.2rem}
+.ef-x{position:absolute;top:1rem;right:1.25rem;background:none;border:none;color:rgba(255,255,255,.35);font-size:1.1rem;cursor:pointer;line-height:1}
 </style>
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-nZfUxLSBfVKDBCAmGUihU.js"></script>
@@ -699,7 +581,7 @@
       <h3>Your report identifies the gaps.<br/>We close them.</h3>
       <p>Book a Flow Audit™ Review Session with an Envisioned Flow™ strategist — we'll walk through your governance gaps, prioritize what matters most, and leave you with a clear remediation plan.</p>
       <div class="cta-buttons">
-        <button class="btn-cta-primary" onclick="openFAModal()">Book a Flow Audit&#8482; Review Session</button>
+        <button class="btn-cta-primary" onclick="efOpen()">Book a Flow Audit&#8482; Review Session</button>
         <button class="btn-cta-secondary" onclick="resetAssessment()">Retake Assessment</button>
       </div>
       <button class="print-btn" onclick="window.print()">
@@ -893,16 +775,39 @@ Return ONLY valid JSON with this exact structure (no markdown, no preamble):
 }`;
 
   try {
-    const res = await fetch('/.netlify/functions/analyze-governance', {
+    // Step 1 — submit job
+    const submitRes = await fetch('/.netlify/functions/generate-report', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ prompt })
     });
-    const data = await res.json();
-    const text = data.content?.[0]?.text || '';
-    const clean = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
-    const report = JSON.parse(clean);
-    renderReport(report);
+    const { jobId } = await submitRes.json();
+    if (!jobId) throw new Error('Failed to start report generation');
+
+    // Step 2 — poll for result
+    let attempts = 0;
+    const maxAttempts = 40; // 40 x 3s = 2 minutes max
+    const poll = async () => {
+      attempts++;
+      if (attempts > maxAttempts) throw new Error('Report generation timed out. Please try again.');
+      const pollRes = await fetch(`/.netlify/functions/get-report?jobId=${jobId}`);
+      const result = await pollRes.json();
+      if (result.status === 'pending') {
+        await new Promise(r => setTimeout(r, 3000));
+        return poll();
+      }
+      if (result.status === 'error') throw new Error(result.error || 'Report generation failed');
+      if (result.status === 'complete') {
+        const text = result.data?.content?.[0]?.text || '';
+        const clean = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
+        const report = JSON.parse(clean);
+        renderReport(report);
+        return;
+      }
+      throw new Error('Unexpected status: ' + result.status);
+    };
+    await poll();
+
   } catch(err) {
     document.getElementById('loading').classList.add('hidden');
     document.getElementById('results').classList.remove('hidden');
@@ -1029,62 +934,27 @@ function resetAssessment() {
 </script>
 
 
-  <!-- Flow Audit Modal -->
-  <div class="fa-modal-overlay" id="faModal">
-    <div class="fa-modal">
-      <button class="fa-modal-close" onclick="closeFAModal()">&#x2715;</button>
-      <div class="fa-modal-label">Paid Engagement</div>
-      <h3>Flow Audit&#8482; Review Session</h3>
-      <div class="fa-modal-price">AED 2,500 &middot; One-time payment</div>
-      <p class="fa-modal-desc">A focused 60-minute working session with your Envisioned Flow&#8482; strategist &mdash; expert review of your results, prioritized recommendations, and a written action plan.</p>
-      <ul class="fa-modal-steps">
-        <li>
-          <div class="fa-modal-step-num">1</div>
-          <div class="fa-modal-step-text">
-            <strong>Complete your prep document</strong>
-            10 minutes to complete &mdash; shapes how we spend our 60 minutes together. Sent to you immediately after payment.
-          </div>
-        </li>
-        <li>
-          <div class="fa-modal-step-num">2</div>
-          <div class="fa-modal-step-text">
-            <strong>Book your session</strong>
-            Select a time that works for you via our scheduling page. You are redirected there automatically after payment.
-          </div>
-        </li>
-        <li>
-          <div class="fa-modal-step-num">3</div>
-          <div class="fa-modal-step-text">
-            <strong>60-minute expert session</strong>
-            Expert review of your assessment results with prioritized recommendations tailored to your context.
-          </div>
-        </li>
-        <li>
-          <div class="fa-modal-step-num">4</div>
-          <div class="fa-modal-step-text">
-            <strong>Written summary delivered</strong>
-            Your action plan delivered within 24 hours of your session.
-          </div>
-        </li>
-      </ul>
-      <div class="fa-modal-actions">
-        <a href="https://buy.stripe.com/14A6oGeRD1HB80a2IY57W00" target="_blank" class="fa-modal-btn-primary">Proceed to Payment &#x2192;</a>
-        <button class="fa-modal-btn-cancel" onclick="closeFAModal()">Cancel</button>
-      </div>
-    </div>
+<div class="ef-overlay" id="efModal" onclick="if(event.target===this)efClose()">
+  <div class="ef-modal">
+    <button class="ef-x" onclick="efClose()">&#x2715;</button>
+    <div class="ef-badge">Paid Engagement</div>
+    <h3>Flow Audit&#8482; Review Session</h3>
+    <div class="ef-price">AED 2,500 &middot; One-time payment</div>
+    <p class="ef-desc">A focused 60-minute working session with your Envisioned Flow&#8482; strategist &mdash; expert review of your results, prioritized recommendations, and a written action plan.</p>
+    <ul class="ef-steps">
+      <li><div class="ef-num">1</div><div><strong>Complete your prep document</strong>10 minutes to complete &mdash; shapes how we spend our time together. Sent immediately after payment.</div></li>
+      <li><div class="ef-num">2</div><div><strong>Book your session</strong>Select a time via our scheduling page. Redirected there automatically after payment.</div></li>
+      <li><div class="ef-num">3</div><div><strong>60-minute expert session</strong>Expert review of your assessment results with prioritized recommendations tailored to your context.</div></li>
+      <li><div class="ef-num">4</div><div><strong>Written summary delivered</strong>Your action plan delivered within 24 hours of your session.</div></li>
+    </ul>
+    <a href="https://buy.stripe.com/14A6oGeRD1HB80a2IY57W00" target="_blank" class="ef-pay">Proceed to Payment &#x2192;</a>
+    <button class="ef-cancel" onclick="efClose()">Cancel</button>
   </div>
+</div>
 <script>
-  function openFAModal() {
-    document.getElementById("faModal").classList.add("active");
-    document.body.style.overflow = "hidden";
-  }
-  function closeFAModal() {
-    document.getElementById("faModal").classList.remove("active");
-    document.body.style.overflow = "";
-  }
-  document.addEventListener("keydown", function(e) {
-    if (e.key === "Escape") closeFAModal();
-  });
+function efOpen(){document.getElementById('efModal').classList.add('ef-open');document.body.style.overflow='hidden';}
+function efClose(){document.getElementById('efModal').classList.remove('ef-open');document.body.style.overflow='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')efClose();});
 </script>
 </body>
 </html>
