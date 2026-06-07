@@ -766,7 +766,8 @@ Return ONLY valid JSON with this exact structure (no markdown, no preamble):
     });
     const data = await res.json();
     const text = data.content?.[0]?.text || '';
-    const report = JSON.parse(text.replace(/```json|```/g, '').trim());
+    const clean = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
+    const report = JSON.parse(clean);
     renderReport(report);
   } catch(err) {
     document.getElementById('loading').classList.add('hidden');
