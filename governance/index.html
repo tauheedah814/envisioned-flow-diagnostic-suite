@@ -775,38 +775,16 @@ Return ONLY valid JSON with this exact structure (no markdown, no preamble):
 }`;
 
   try {
-    // Step 1 — submit job
-    const submitRes = await fetch('/.netlify/functions/generate-report', {
+    const res = await fetch('/.netlify/functions/analyze-governance', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ prompt })
     });
-    const { jobId } = await submitRes.json();
-    if (!jobId) throw new Error('Failed to start report generation');
-
-    // Step 2 — poll for result
-    let attempts = 0;
-    const maxAttempts = 40; // 40 x 3s = 2 minutes max
-    const poll = async () => {
-      attempts++;
-      if (attempts > maxAttempts) throw new Error('Report generation timed out. Please try again.');
-      const pollRes = await fetch(`/.netlify/functions/get-report?jobId=${jobId}`);
-      const result = await pollRes.json();
-      if (result.status === 'pending') {
-        await new Promise(r => setTimeout(r, 3000));
-        return poll();
-      }
-      if (result.status === 'error') throw new Error(result.error || 'Report generation failed');
-      if (result.status === 'complete') {
-        const text = result.data?.content?.[0]?.text || '';
-        const clean = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
-        const report = JSON.parse(clean);
-        renderReport(report);
-        return;
-      }
-      throw new Error('Unexpected status: ' + result.status);
-    };
-    await poll();
+    const data = await res.json();
+    const text = data.content?.[0]?.text || '';
+    const clean = text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/i, '').trim();
+    const report = JSON.parse(clean);
+    renderReport(report);
 
   } catch(err) {
     document.getElementById('loading').classList.add('hidden');
