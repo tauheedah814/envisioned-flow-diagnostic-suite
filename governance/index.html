@@ -276,7 +276,7 @@
   .dim-top { display: flex; justify-content: space-between; align-items: center; }
   .dim-name { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; color: #FFFFFF; }
   .dim-score { font-size: 0.78rem; font-weight: 600; color: var(--gold); }
-  .dim-bar { height: 4px; background: rgba(255,255,255,0.28); border-radius: 4px; overflow: hidden; }
+  .dim-bar { height: 5px; background: rgba(255,255,255,0.22); border-radius: 4px; overflow: hidden; }
   .dim-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
 
   /* REPORT SECTIONS */
@@ -833,7 +833,7 @@ function renderReport(r) {
   dimEl.innerHTML = '';
   DOMAINS.forEach(d => {
     const pct = domainScores[d];
-    const color = pct >= 65 ? '#C4A35A' : pct >= 40 ? '#8C7748' : '#555';
+    const color = pct >= 65 ? '#C4A35A' : pct >= 40 ? '#9E8040' : '#7A6332';
     dimEl.innerHTML += `
       <div class="dim-row">
         <div class="dim-top">
