@@ -128,8 +128,8 @@
     text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 1rem;
   }
   .question-text {
-    font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 3vw, 1.6rem);
-    font-weight: 700; line-height: 1.35; color: var(--white); margin-bottom: 2rem;
+    font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+    font-weight: 900; line-height: 1.35; color: var(--white); margin-bottom: 2rem;
   }
   .options { display: flex; flex-direction: column; gap: 0.85rem; }
   .option {
@@ -139,7 +139,7 @@
     background: rgba(255,255,255,0.02);
   }
   .option:hover { border-color: rgba(196,163,90,0.4); background: rgba(196,163,90,0.05); }
-  .option.selected { border-color: var(--gold); background: rgba(196,163,90,0.1); }
+  .option.selected { border-color: var(--gold); border-width: 2.5px; background: rgba(196,163,90,0.12); }
   .option-letter {
     width: 28px; height: 28px; border-radius: 50%;
     border: 1.5px solid rgba(255,255,255,0.2);
@@ -191,8 +191,8 @@
   .gate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
   .gate-field { display: flex; flex-direction: column; gap: 0.4rem; }
   .gate-field label {
-    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: rgba(255,255,255,0.35);
+    font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #FFFFFF;
   }
   .gate-field input {
     width: 100%; background: rgba(255,255,255,0.05);
@@ -202,7 +202,7 @@
     border-radius: 6px; outline: none; transition: border-color 0.2s;
   }
   .gate-field input:focus { border-color: var(--gold); }
-  .gate-field input::placeholder { color: rgba(255,255,255,0.2); }
+  .gate-field input::placeholder { color: rgba(255,255,255,0.5); }
   .btn-gate {
     width: 100%; background: var(--gold); color: var(--black);
     border: none; padding: 0.95rem 2rem; font-family: 'DM Sans', sans-serif;
